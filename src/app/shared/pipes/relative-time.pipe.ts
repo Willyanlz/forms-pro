@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR, enUS, es } from 'date-fns/locale';
+import type { Locale } from 'date-fns';
 
 type SupportedLocale = 'pt' | 'en' | 'es';
 

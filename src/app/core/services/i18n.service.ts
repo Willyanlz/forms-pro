@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageCode, TranslatedField } from '../models/translated-field.model';
+export type { LanguageCode } from '../models/translated-field.model';
 
 const SUPPORTED_LANGS: LanguageCode[] = ['pt', 'en', 'es'];
 const DEFAULT_LANG: LanguageCode = 'pt';

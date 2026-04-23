@@ -1,11 +1,11 @@
 export interface AdminProfile {
   id: string;
-  userId: string;
+  user_id: string;
   slug: string | null;
-  displayName: string | null;
+  display_name: string | null;
   description: string | null;
-  photoUrl: string | null;
-  whatsappNumber: string | null;
-  createdAt: string;
-  updatedAt: string;
+  photo_url: string | null;
+  whatsapp_number: string | null;
+  created_at: string;
+  updated_at: string;
 }

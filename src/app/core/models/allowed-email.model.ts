@@ -1,8 +1,8 @@
 export interface AllowedEmail {
   id: string;
-  userId: string | null;
+  user_id: string | null;
   email: string;
-  isRegistered: boolean;
-  invitedAt: string;
-  registeredAt: string | null;
+  is_registered: boolean;
+  invited_at: string;
+  registered_at: string | null;
 }

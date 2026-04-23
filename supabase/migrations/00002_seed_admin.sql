@@ -4,8 +4,7 @@
 --
 -- PURPOSE:
 --   This script is meant to be run AFTER the first user has registered through
---   Supabase Auth. Replace the placeholder UUID below with the actual user UUID
---   from your auth.users table before executing.
+--   Supabase Auth. It automatically uses the first available auth.users record.
 --
 -- HOW TO GET YOUR USER UUID:
 --   In the Supabase Dashboard → Authentication → Users → copy the UUID of the
@@ -14,15 +13,23 @@
 --
 -- USAGE:
 --   1. Register your admin account via the app or Supabase Auth.
---   2. Copy your user UUID.
---   3. Replace '00000000-0000-0000-0000-000000000001' with your real UUID.
---   4. Run this script.
+--   2. Run this script.
 -- =============================================================================
 
 DO $$
 DECLARE
-  v_user_id UUID := '00000000-0000-0000-0000-000000000001'; -- REPLACE WITH REAL USER UUID
+  v_user_id UUID;
 BEGIN
+  SELECT id
+  INTO v_user_id
+  FROM auth.users
+  ORDER BY created_at
+  LIMIT 1;
+
+  IF v_user_id IS NULL THEN
+    RAISE NOTICE 'Skipping 00002_seed_admin.sql because auth.users is empty.';
+    RETURN;
+  END IF;
 
   -- -------------------------------------------------------------------------
   -- admin_profile

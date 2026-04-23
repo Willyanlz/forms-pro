@@ -33,15 +33,15 @@ export class ThemeService {
     const root = document.documentElement;
     root.style.setProperty(
       '--color-primary',
-      settings.primaryColor ?? DEFAULT_PRIMARY_COLOR
+      settings.primary_color ?? DEFAULT_PRIMARY_COLOR
     );
     root.style.setProperty(
       '--color-secondary',
-      settings.secondaryColor ?? DEFAULT_SECONDARY_COLOR
+      settings.secondary_color ?? DEFAULT_SECONDARY_COLOR
     );
     root.style.setProperty(
       '--color-accent',
-      settings.accentColor ?? DEFAULT_ACCENT_COLOR
+      settings.accent_color ?? DEFAULT_ACCENT_COLOR
     );
   }
 }

@@ -1,9 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { I18nService } from '../../../core/services/i18n.service';
+import { I18nService, LanguageCode } from '../../../core/services/i18n.service';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 interface LanguageOption {
-  code: string;
+  code: LanguageCode;
   label: string;
   flag: string;
 }
@@ -11,7 +12,7 @@ interface LanguageOption {
 @Component({
   selector: 'app-language-selector',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ClickOutsideDirective],
   template: `
     <div class="relative" (appClickOutside)="isOpen.set(false)">
       <button
@@ -69,7 +70,7 @@ export class LanguageSelectorComponent {
     return this.languages.find(l => l.code === this.i18nService.currentLang()) ?? this.languages[0];
   }
 
-  select(code: string): void {
+  select(code: LanguageCode): void {
     this.i18nService.changeLang(code);
     this.isOpen.set(false);
   }

@@ -6,7 +6,13 @@
 -- ---------------------------------------------------------------------------
 -- 1. EXTENSIONS
 -- ---------------------------------------------------------------------------
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
+RETURNS UUID AS $$
+  SELECT gen_random_uuid();
+$$ LANGUAGE sql VOLATILE;
 
 
 -- ---------------------------------------------------------------------------

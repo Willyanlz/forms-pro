@@ -7,13 +7,13 @@
 --   Translated fields use JSONB format: {"pt": "..."} (Portuguese only for seed).
 --
 -- BEFORE RUNNING:
---   Replace '00000000-0000-0000-0000-000000000001' with the real admin user UUID.
+--   This script automatically uses the first available admin user UUID.
 --   This must be run AFTER 00002_seed_admin.sql.
 -- =============================================================================
 
 DO $$
 DECLARE
-  v_user_id UUID := '00000000-0000-0000-0000-000000000001'; -- REPLACE WITH REAL USER UUID
+  v_user_id UUID;
 
   -- Form 1: Ficha de Revisao - Pessoa Fisica
   v_form1_id   UUID := uuid_generate_v4();
@@ -41,6 +41,16 @@ DECLARE
   v_s17_id UUID := uuid_generate_v4();  -- Observacoes e Encaminhamentos
 
 BEGIN
+SELECT id
+INTO v_user_id
+FROM auth.users
+ORDER BY created_at
+LIMIT 1;
+
+IF v_user_id IS NULL THEN
+  RAISE NOTICE 'Skipping 00003_seed_forms.sql because auth.users is empty.';
+  RETURN;
+END IF;
 
 -- =============================================================================
 -- FORM 1: Ficha de Revisao - Pessoa Fisica

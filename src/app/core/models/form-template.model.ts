@@ -49,54 +49,66 @@ export type FieldAnswerValue =
   | null;
 
 export interface FieldAnswer {
-  fieldId: string;
+  field_id: string;
   value: FieldAnswerValue;
 }
 
 export interface FormField {
   id: string;
-  type: FieldType;
+  template_id: string;
+  section_id: string;
+  field_type: FieldType;
   label: TranslatedField;
   placeholder: TranslatedField | null;
-  helperText: TranslatedField | null;
-  required: boolean;
-  order: number;
+  helper_text: TranslatedField | null;
+  is_required: boolean;
+  display_order: number;
   options: FieldOption[] | null;
   currency: CurrencyCode | null;
-  minLength: number | null;
-  maxLength: number | null;
-  min: number | null;
-  max: number | null;
+  min_length: number | null;
+  max_length: number | null;
+  min_value: number | null;
+  max_value: number | null;
   mask: string | null;
-  defaultValue: FieldAnswerValue | null;
+  default_value: FieldAnswerValue | null;
+  conditional_field_id?: string | null;
+  conditional_value?: string | null;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface FormSection {
   id: string;
+  template_id: string;
   title: TranslatedField;
   description: TranslatedField | null;
-  order: number;
-  fields: FormField[];
+  display_order: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface FormTemplate {
   id: string;
-  userId: string;
+  user_id: string | null;
   slug: string;
   title: TranslatedField;
   description: TranslatedField | null;
-  isActive: boolean;
-  isPublic: boolean;
-  sections: FormSection[];
-  createdAt: string;
-  updatedAt: string;
+  status: 'draft' | 'active' | 'archived';
+  display_order?: number | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface FormSubmission {
   id: string;
-  formId: string;
-  userId: string | null;
-  answers: FieldAnswer[];
-  submittedAt: string;
+  template_id: string;
+  user_id: string | null;
+  template_title: string | null;
+  submitter_name: string | null;
+  submitter_email: string | null;
+  answers: Record<string, FieldAnswerValue>;
+  status?: 'new' | 'read' | 'archived';
+  submitted_at: string;
   metadata: Record<string, unknown> | null;
 }

@@ -1,7 +1,8 @@
-export { TranslatedField, LanguageCode } from './translated-field.model';
-export { AdminProfile } from './admin-profile.model';
-export { AppSettings, EmailProvider } from './app-settings.model';
-export {
+export type { TranslatedField, LanguageCode } from './translated-field.model';
+export type { AdminProfile } from './admin-profile.model';
+export { createDefaultAppSettings } from './app-settings.model';
+export type { AppSettings, EmailProvider } from './app-settings.model';
+export type {
   FormTemplate,
   FormSection,
   FormField,
@@ -13,4 +14,4 @@ export {
   FieldAnswer,
   FormSubmission,
 } from './form-template.model';
-export { AllowedEmail } from './allowed-email.model';
+export type { AllowedEmail } from './allowed-email.model';

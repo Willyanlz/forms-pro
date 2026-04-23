@@ -1,0 +1,195 @@
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { SupabaseService } from '@core/services/supabase.service';
+import { AuthService } from '@core/services/auth.service';
+import { ThemeService } from '@core/services/theme.service';
+import { ToastService } from '@core/services/toast.service';
+import { AppSettings, createDefaultAppSettings } from '@core/models';
+
+@Component({
+  selector: 'app-appearance',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink, TranslateModule],
+  template: `
+    <div class="min-h-screen bg-surface">
+      <header class="bg-white border-b border-border px-6 py-4">
+        <div class="max-w-4xl mx-auto flex items-center gap-4">
+          <a routerLink="/admin" class="text-text-secondary hover:text-text-primary">←</a>
+          <div>
+            <h1 class="text-xl font-semibold text-text-primary" i18n="@@appearance">Aparência</h1>
+            <p class="text-sm text-text-secondary" i18n="@@appearanceDesc">Personalize as cores do sistema</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="max-w-4xl mx-auto p-6">
+        <form (ngSubmit)="onSubmit()" class="bg-white rounded-xl border border-border p-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2" i18n="@@primaryColor">
+                Cor Primária
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="color"
+                  [(ngModel)]="settings.primary_color"
+                  name="primary_color"
+                  class="w-12 h-12 rounded cursor-pointer border-0"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="settings.primary_color"
+                  name="primary_color_text"
+                  class="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2" i18n="@@secondaryColor">
+                Cor Secundária
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="color"
+                  [(ngModel)]="settings.secondary_color"
+                  name="secondary_color"
+                  class="w-12 h-12 rounded cursor-pointer border-0"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="settings.secondary_color"
+                  name="secondary_color_text"
+                  class="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2" i18n="@@accentColor">
+                Cor de Destaque
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="color"
+                  [(ngModel)]="settings.accent_color"
+                  name="accent_color"
+                  class="w-12 h-12 rounded cursor-pointer border-0"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="settings.accent_color"
+                  name="accent_color_text"
+                  class="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="mb-6 p-4 bg-surface rounded-lg">
+            <p class="text-sm text-text-secondary mb-2">Preview</p>
+            <div class="flex gap-4">
+              <button
+                class="px-4 py-2 rounded-lg font-medium"
+                [style.backgroundColor]="settings.primary_color || '#F5A623'"
+                [style.color]="'white'"
+              >
+                Botão Primário
+              </button>
+              <button
+                class="px-4 py-2 rounded-lg font-medium border"
+                [style.borderColor]="settings.secondary_color || '#1A1A2E'"
+                [style.color]="settings.secondary_color || '#1A1A2E'"
+              >
+                Botão Secundário
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <button
+              type="submit"
+              [disabled]="saving()"
+              class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark
+                     transition-colors disabled:opacity-50"
+            >
+              {{ saving() ? 'Salvando...' : 'Salvar' }}
+            </button>
+            <button
+              type="button"
+              (click)="resetDefaults()"
+              class="px-6 py-3 border border-border text-text-primary rounded-lg font-medium
+                     hover:bg-surface transition-colors"
+              i18n="@@restoreDefaults"
+            >
+              Restaurar Padrões
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `,
+})
+export class AppearanceComponent implements OnInit {
+  private supabase = inject(SupabaseService);
+  private auth = inject(AuthService);
+  private theme = inject(ThemeService);
+  private toast = inject(ToastService);
+
+  settings: AppSettings = createDefaultAppSettings();
+
+  saving = signal(false);
+
+  async ngOnInit(): Promise<void> {
+    await this.loadSettings();
+  }
+
+  private async loadSettings(): Promise<void> {
+    const user = this.auth.currentUser();
+    if (!user) return;
+
+    const { data } = await this.supabase.client
+      .from('app_settings')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if (data) {
+      this.settings = { ...this.settings, ...data };
+    }
+  }
+
+  async onSubmit(): Promise<void> {
+    this.saving.set(true);
+    try {
+      const user = this.auth.currentUser();
+      if (!user) return;
+
+      await this.supabase.client.from('app_settings').upsert({
+        user_id: user.id,
+        primary_color: this.settings.primary_color,
+        secondary_color: this.settings.secondary_color,
+        accent_color: this.settings.accent_color,
+      });
+
+      // Apply theme
+      this.theme.applyColors(this.settings);
+
+      this.toast.success('Cores salvas com sucesso!');
+    } catch (err: any) {
+      this.toast.error(err.message || 'Erro ao salvar');
+    } finally {
+      this.saving.set(false);
+    }
+  }
+
+  resetDefaults(): void {
+    this.settings.primary_color = '#F5A623';
+    this.settings.secondary_color = '#1A1A2E';
+    this.settings.accent_color = '#E8F4FD';
+  }
+}
