@@ -1,0 +1,223 @@
+{
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "duplicate": "Duplicar",
+    "archive": "Arquivar",
+    "loading": "Carregando...",
+    "success": "Operacao realizada com sucesso",
+    "error": "Ocorreu um erro. Tente novamente.",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Avancar",
+    "close": "Fechar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "no_results": "Nenhum resultado encontrado",
+    "yes": "Sim",
+    "no": "Nao"
+  },
+  "landing": {
+    "hero_cta": "Entrar em Contato",
+    "contact_modal_title": "Como prefere entrar em contato?",
+    "fill_form": "Preencher Formulario",
+    "whatsapp": "Falar no WhatsApp",
+    "login": "Entrar",
+    "about_title": "Sobre",
+    "services_title": "Servicos",
+    "service_planning": "Planejamento Financeiro",
+    "service_planning_desc": "Estrategias personalizadas para alcancar seus objetivos financeiros.",
+    "service_monitoring": "Acompanhamento de Carteira",
+    "service_monitoring_desc": "Monitoramento continuo dos seus investimentos com relatorios periodicos.",
+    "service_pf": "Assessoria Pessoa Fisica",
+    "service_pf_desc": "Atendimento dedicado para investidores individuais.",
+    "service_pj": "Assessoria Pessoa Juridica",
+    "service_pj_desc": "Solucoes financeiras para empresas e negocios.",
+    "footer": "Labs Will {{year}}"
+  },
+  "forms": {
+    "title": "Formularios",
+    "page_indicator": "Pagina {{current}} de {{total}}",
+    "next": "Avancar",
+    "back": "Voltar",
+    "submit": "Enviar",
+    "success_title": "Formulario enviado!",
+    "success_message": "Obrigado! Entraremos em contato em breve.",
+    "whatsapp_button": "Falar no WhatsApp",
+    "no_forms": "Nenhum formulario disponivel no momento.",
+    "sections_count": "{{count}} secoes",
+    "required_field": "Campo obrigatorio"
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Dashboard",
+      "total_forms": "Total de Formularios",
+      "total_submissions": "Total de Respostas",
+      "this_month": "Este mes",
+      "last_month": "Mes anterior",
+      "recent_submissions": "Ultimas Respostas",
+      "top_forms": "Formularios Mais Respondidos"
+    },
+    "form_builder": {
+      "title": "Construtor de Formularios",
+      "new_form": "Novo Formulario",
+      "edit_form": "Editar Formulario",
+      "form_title": "Titulo do Formulario",
+      "form_description": "Descricao",
+      "form_slug": "Slug (URL amigavel)",
+      "form_status": "Status",
+      "sections": "Secoes",
+      "add_section": "Adicionar Secao",
+      "add_field": "Adicionar Campo",
+      "field_types": "Tipos de Campo",
+      "field_properties": "Propriedades do Campo",
+      "label": "Label",
+      "placeholder": "Placeholder",
+      "helper_text": "Texto de ajuda",
+      "required": "Obrigatorio",
+      "options": "Opcoes",
+      "add_option": "Adicionar opcao",
+      "conditional_logic": "Logica Condicional",
+      "show_if": "Mostrar se",
+      "equals": "for igual a",
+      "preview": "Visualizar",
+      "saving": "Salvando...",
+      "saved_at": "Salvo as {{time}}",
+      "save_error": "Erro ao salvar",
+      "delete_confirm": "Tem certeza que deseja excluir?",
+      "delete_type_confirm": "Esta acao e irreversivel. Digite EXCLUIR para confirmar.",
+      "duplicate_success": "Formulario duplicado com sucesso"
+    },
+    "submissions": {
+      "title": "Respostas",
+      "filter_form": "Filtrar por formulario",
+      "filter_status": "Status",
+      "filter_date_start": "Data inicio",
+      "filter_date_end": "Data fim",
+      "filter_name": "Nome do respondente",
+      "status_new": "Novo",
+      "status_read": "Lido",
+      "status_archived": "Arquivado",
+      "mark_read": "Marcar como lido",
+      "export_csv": "Exportar CSV",
+      "per_page": "Por pagina",
+      "detail_title": "Detalhes da Resposta",
+      "edit_submission": "Editar Resposta",
+      "delete_modal_1": "Tem certeza que deseja excluir esta resposta?",
+      "delete_modal_2": "Esta acao e irreversivel. Digite DELETE para confirmar."
+    },
+    "settings": {
+      "title": "Configuracoes",
+      "general": "Geral",
+      "appearance": "Aparencia",
+      "email": "E-mail",
+      "profile": "Perfil",
+      "whatsapp": "WhatsApp"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "form_builder": "Formularios",
+      "submissions": "Respostas",
+      "settings": "Configuracoes",
+      "logout": "Sair"
+    }
+  },
+  "auth": {
+    "login_title": "Entrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "login_button": "Entrar",
+    "invalid_credentials": "E-mail ou senha invalidos",
+    "set_password_title": "Definir Senha",
+    "new_password": "Nova Senha",
+    "confirm_password": "Confirmar Senha",
+    "set_password_button": "Definir Senha",
+    "password_strength": {
+      "weak": "Fraca",
+      "medium": "Media",
+      "strong": "Forte"
+    },
+    "password_rules": {
+      "min_length": "Minimo 8 caracteres",
+      "uppercase": "Uma letra maiuscula",
+      "number": "Um numero"
+    }
+  },
+  "settings": {
+    "profile": {
+      "title": "Perfil",
+      "display_name": "Nome de Exibicao",
+      "description": "Descricao/Bio",
+      "photo": "Foto de Perfil",
+      "upload_photo": "Enviar Foto",
+      "save": "Salvar Perfil"
+    },
+    "appearance": {
+      "title": "Personalizacao de Cores",
+      "primary_color": "Cor Primaria",
+      "secondary_color": "Cor Secundaria",
+      "accent_color": "Cor de Destaque",
+      "restore_defaults": "Restaurar Padroes",
+      "preview": "Preview"
+    },
+    "email": {
+      "title": "Configuracao de E-mail",
+      "provider_resend": "Resend",
+      "provider_smtp": "SMTP",
+      "provider_none": "Nenhum",
+      "resend_api_key": "API Key",
+      "resend_from_email": "E-mail Remetente",
+      "smtp_host": "Host",
+      "smtp_port": "Porta",
+      "smtp_user": "Usuario",
+      "smtp_password": "Senha",
+      "smtp_from_email": "E-mail Remetente",
+      "smtp_secure": "TLS",
+      "test_connection": "Testar Conexao",
+      "test_success": "E-mail de teste enviado com sucesso!",
+      "test_error": "Erro ao enviar e-mail de teste",
+      "no_email_warning": "Sem configuracao de e-mail, notificacoes nao serao enviadas. As respostas continuarao sendo salvas normalmente.",
+      "resend_tutorial": "1. Acesse resend.com e crie uma conta\n2. Va em API Keys e crie uma nova chave\n3. Cole a chave abaixo\n4. Configure um dominio em Domains\n5. Informe o e-mail remetente\n6. Clique em Testar Conexao\n\nPlano gratuito: 3.000 e-mails/mes | 100/dia",
+      "smtp_tutorial": "Configure com as credenciais do seu provedor:\n\nGmail: smtp.gmail.com | Porta 587 | TLS\nOutlook: smtp-mail.outlook.com | Porta 587\nZoho: smtp.zoho.com | Porta 587\nHostinger: smtp.hostinger.com | Porta 587\n\nPara Gmail, use Senha de App."
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "number": "Numero WhatsApp",
+      "number_hint": "Ex: +55 11 99999-9999",
+      "preview_link": "Preview do link",
+      "test_link": "Testar",
+      "default_message": "Mensagem padrao",
+      "default_message_hint": "Mensagem enviada apos preenchimento do formulario",
+      "default_message_value": "Ola, acabei de preencher o formulario, aguardo seu contato."
+    },
+    "general": {
+      "title": "Configuracoes Gerais",
+      "default_language": "Idioma Padrao",
+      "active_languages": "Idiomas Ativos",
+      "webhook_url": "Webhook URL (opcional)",
+      "webhook_test": "Testar Webhook"
+    }
+  },
+  "validation": {
+    "required": "Este campo e obrigatorio",
+    "email": "E-mail invalido",
+    "min_length": "Minimo {{min}} caracteres",
+    "max_length": "Maximo {{max}} caracteres",
+    "min_value": "Valor minimo: {{min}}",
+    "max_value": "Valor maximo: {{max}}",
+    "cpf": "CPF invalido",
+    "cnpj": "CNPJ invalido",
+    "phone": "Telefone invalido",
+    "cep": "CEP invalido",
+    "url": "URL invalida",
+    "passwords_mismatch": "As senhas nao coincidem"
+  },
+  "languages": {
+    "pt": "Portugues",
+    "en": "English",
+    "es": "Espanol"
+  }
+}

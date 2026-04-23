@@ -1,0 +1,223 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "duplicate": "Duplicar",
+    "archive": "Archivar",
+    "loading": "Cargando...",
+    "success": "Operacion realizada con exito",
+    "error": "Ocurrio un error. Intentelo de nuevo.",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "no_results": "No se encontraron resultados",
+    "yes": "Si",
+    "no": "No"
+  },
+  "landing": {
+    "hero_cta": "Contactar",
+    "contact_modal_title": "Como prefiere ponerse en contacto?",
+    "fill_form": "Completar Formulario",
+    "whatsapp": "Hablar por WhatsApp",
+    "login": "Iniciar Sesion",
+    "about_title": "Acerca de",
+    "services_title": "Servicios",
+    "service_planning": "Planificacion Financiera",
+    "service_planning_desc": "Estrategias personalizadas para alcanzar sus objetivos financieros.",
+    "service_monitoring": "Seguimiento de Cartera",
+    "service_monitoring_desc": "Monitoreo continuo de sus inversiones con informes periodicos.",
+    "service_pf": "Asesoria Persona Fisica",
+    "service_pf_desc": "Atencion dedicada para inversores individuales.",
+    "service_pj": "Asesoria Persona Juridica",
+    "service_pj_desc": "Soluciones financieras para empresas y negocios.",
+    "footer": "Labs Will {{year}}"
+  },
+  "forms": {
+    "title": "Formularios",
+    "page_indicator": "Pagina {{current}} de {{total}}",
+    "next": "Siguiente",
+    "back": "Volver",
+    "submit": "Enviar",
+    "success_title": "Formulario enviado!",
+    "success_message": "Gracias! Nos pondremos en contacto pronto.",
+    "whatsapp_button": "Hablar por WhatsApp",
+    "no_forms": "No hay formularios disponibles en este momento.",
+    "sections_count": "{{count}} secciones",
+    "required_field": "Campo obligatorio"
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Panel",
+      "total_forms": "Total de Formularios",
+      "total_submissions": "Total de Respuestas",
+      "this_month": "Este mes",
+      "last_month": "Mes anterior",
+      "recent_submissions": "Respuestas Recientes",
+      "top_forms": "Formularios Mas Respondidos"
+    },
+    "form_builder": {
+      "title": "Constructor de Formularios",
+      "new_form": "Nuevo Formulario",
+      "edit_form": "Editar Formulario",
+      "form_title": "Titulo del Formulario",
+      "form_description": "Descripcion",
+      "form_slug": "Slug (URL amigable)",
+      "form_status": "Estado",
+      "sections": "Secciones",
+      "add_section": "Agregar Seccion",
+      "add_field": "Agregar Campo",
+      "field_types": "Tipos de Campo",
+      "field_properties": "Propiedades del Campo",
+      "label": "Etiqueta",
+      "placeholder": "Placeholder",
+      "helper_text": "Texto de ayuda",
+      "required": "Obligatorio",
+      "options": "Opciones",
+      "add_option": "Agregar opcion",
+      "conditional_logic": "Logica Condicional",
+      "show_if": "Mostrar si",
+      "equals": "es igual a",
+      "preview": "Vista previa",
+      "saving": "Guardando...",
+      "saved_at": "Guardado a las {{time}}",
+      "save_error": "Error al guardar",
+      "delete_confirm": "Esta seguro de que desea eliminar?",
+      "delete_type_confirm": "Esta accion es irreversible. Escriba ELIMINAR para confirmar.",
+      "duplicate_success": "Formulario duplicado con exito"
+    },
+    "submissions": {
+      "title": "Respuestas",
+      "filter_form": "Filtrar por formulario",
+      "filter_status": "Estado",
+      "filter_date_start": "Fecha inicio",
+      "filter_date_end": "Fecha fin",
+      "filter_name": "Nombre del encuestado",
+      "status_new": "Nuevo",
+      "status_read": "Leido",
+      "status_archived": "Archivado",
+      "mark_read": "Marcar como leido",
+      "export_csv": "Exportar CSV",
+      "per_page": "Por pagina",
+      "detail_title": "Detalles de la Respuesta",
+      "edit_submission": "Editar Respuesta",
+      "delete_modal_1": "Esta seguro de que desea eliminar esta respuesta?",
+      "delete_modal_2": "Esta accion es irreversible. Escriba DELETE para confirmar."
+    },
+    "settings": {
+      "title": "Configuracion",
+      "general": "General",
+      "appearance": "Apariencia",
+      "email": "Correo",
+      "profile": "Perfil",
+      "whatsapp": "WhatsApp"
+    },
+    "nav": {
+      "dashboard": "Panel",
+      "form_builder": "Formularios",
+      "submissions": "Respuestas",
+      "settings": "Configuracion",
+      "logout": "Cerrar Sesion"
+    }
+  },
+  "auth": {
+    "login_title": "Iniciar Sesion",
+    "email": "Correo electronico",
+    "password": "Contrasena",
+    "login_button": "Iniciar Sesion",
+    "invalid_credentials": "Correo o contrasena invalidos",
+    "set_password_title": "Definir Contrasena",
+    "new_password": "Nueva Contrasena",
+    "confirm_password": "Confirmar Contrasena",
+    "set_password_button": "Definir Contrasena",
+    "password_strength": {
+      "weak": "Debil",
+      "medium": "Media",
+      "strong": "Fuerte"
+    },
+    "password_rules": {
+      "min_length": "Minimo 8 caracteres",
+      "uppercase": "Una letra mayuscula",
+      "number": "Un numero"
+    }
+  },
+  "settings": {
+    "profile": {
+      "title": "Perfil",
+      "display_name": "Nombre de Exhibicion",
+      "description": "Descripcion/Bio",
+      "photo": "Foto de Perfil",
+      "upload_photo": "Subir Foto",
+      "save": "Guardar Perfil"
+    },
+    "appearance": {
+      "title": "Personalizacion de Colores",
+      "primary_color": "Color Primario",
+      "secondary_color": "Color Secundario",
+      "accent_color": "Color de Acento",
+      "restore_defaults": "Restaurar Valores",
+      "preview": "Vista previa"
+    },
+    "email": {
+      "title": "Configuracion de Correo",
+      "provider_resend": "Resend",
+      "provider_smtp": "SMTP",
+      "provider_none": "Ninguno",
+      "resend_api_key": "Clave API",
+      "resend_from_email": "Correo Remitente",
+      "smtp_host": "Host",
+      "smtp_port": "Puerto",
+      "smtp_user": "Usuario",
+      "smtp_password": "Contrasena",
+      "smtp_from_email": "Correo Remitente",
+      "smtp_secure": "TLS",
+      "test_connection": "Probar Conexion",
+      "test_success": "Correo de prueba enviado con exito!",
+      "test_error": "Error al enviar correo de prueba",
+      "no_email_warning": "Sin configuracion de correo, las notificaciones no seran enviadas. Las respuestas seguiran siendo guardadas normalmente.",
+      "resend_tutorial": "1. Acceda a resend.com y cree una cuenta\n2. Vaya a API Keys y cree una nueva clave\n3. Pegue la clave abajo\n4. Configure un dominio en Domains\n5. Ingrese el correo remitente\n6. Haga clic en Probar Conexion\n\nPlan gratuito: 3.000 correos/mes | 100/dia",
+      "smtp_tutorial": "Configure con las credenciales de su proveedor:\n\nGmail: smtp.gmail.com | Puerto 587 | TLS\nOutlook: smtp-mail.outlook.com | Puerto 587\nZoho: smtp.zoho.com | Puerto 587\nHostinger: smtp.hostinger.com | Puerto 587\n\nPara Gmail, use una Contrasena de App."
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "number": "Numero WhatsApp",
+      "number_hint": "Ej: +55 11 99999-9999",
+      "preview_link": "Vista previa del enlace",
+      "test_link": "Probar",
+      "default_message": "Mensaje predeterminado",
+      "default_message_hint": "Mensaje enviado despues del envio del formulario",
+      "default_message_value": "Hola, acabo de completar el formulario, espero su contacto."
+    },
+    "general": {
+      "title": "Configuracion General",
+      "default_language": "Idioma Predeterminado",
+      "active_languages": "Idiomas Activos",
+      "webhook_url": "Webhook URL (opcional)",
+      "webhook_test": "Probar Webhook"
+    }
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Correo invalido",
+    "min_length": "Minimo {{min}} caracteres",
+    "max_length": "Maximo {{max}} caracteres",
+    "min_value": "Valor minimo: {{min}}",
+    "max_value": "Valor maximo: {{max}}",
+    "cpf": "CPF invalido",
+    "cnpj": "CNPJ invalido",
+    "phone": "Telefono invalido",
+    "cep": "CEP invalido",
+    "url": "URL invalida",
+    "passwords_mismatch": "Las contrasenas no coinciden"
+  },
+  "languages": {
+    "pt": "Portugues",
+    "en": "English",
+    "es": "Espanol"
+  }
+}

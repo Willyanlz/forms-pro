@@ -1,0 +1,42 @@
+// =============================================
+// Labs Will — Design System Variables
+// CSS Custom Properties (overridden dynamically via JS)
+// =============================================
+
+:root {
+  // Primary palette (customizable by admin)
+  --color-primary: #F5A623;
+  --color-primary-dark: #D4881A;
+  --color-secondary: #1A1A2E;
+  --color-accent: #E8F4FD;
+
+  // Backgrounds & surfaces
+  --color-background: #FFFFFF;
+  --color-surface: #F8F9FA;
+  --color-border: #E2E8F0;
+
+  // Text
+  --color-text-primary: #1A1A2E;
+  --color-text-secondary: #64748B;
+
+  // Semantic
+  --color-success: #10B981;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+
+  // Shadows
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  // Border radius
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  // Transitions
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+}
