@@ -1,7 +1,7 @@
 # Labs Will - Documentacao do Sistema
 
 ## Visao Geral
-Sistema SaaS de formularios dinamicos com landing page, formularios publicos em wizard, area admin, form builder, submissions, settings e preparacao multi-tenant.
+Sistema de formularios dinamicos com landing page, formularios publicos em wizard, area admin, form builder, submissions e settings.
 
 ## Tecnologias
 - Frontend: Angular standalone
@@ -17,6 +17,20 @@ src/app/
 |- shared/    # Componentes, pipes, validators, directives
 |- features/  # Landing, auth, forms, admin, not-found
 ```
+
+## Padrao de Desenvolvimento
+### Componentes
+Todos os componentes devem seguir o padrao de arquivos separados:
+- `component_name.component.ts`: Logica (Angular Component)
+- `component_name.component.html`: Estrutura (Template)
+- `component_name.component.scss`: Estilo (Styles)
+
+Evite o uso de `template` ou `styles` inline no decorator `@Component`.
+
+### Estilizacao e UX
+- Priorize o uso de variaveis do `_variables.scss` via Tailwind ou SCSS.
+- Garanta contraste adequado para fontes, placeholders e estados de hover.
+- Todos os componentes devem suportar Dark Mode usando as classes `dark:` do Tailwind.
 
 ## Historico de Alteracoes
 

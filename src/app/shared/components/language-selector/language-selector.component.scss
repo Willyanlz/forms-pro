@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.animate-pop-in {
+  animation: popIn 0.2s cubic-bezier(0, 0, 0.2, 1);
+  transform-origin: top right;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

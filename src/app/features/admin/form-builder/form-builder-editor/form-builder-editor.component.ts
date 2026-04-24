@@ -24,218 +24,15 @@ interface FormEditorState {
 @Component({
   selector: 'app-form-builder-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TranslateModule, DragDropModule],
-  template: `
-    <div class="min-h-screen bg-surface flex flex-col">
-      <!-- Header -->
-      <header class="bg-white border-b border-border px-6 py-4">
-        <div class="max-w-full mx-auto flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <a routerLink="/admin/form-builder" class="text-text-secondary hover:text-text-primary">←</a>
-            <div>
-              <input
-                type="text"
-                [(ngModel)]="title"
-                (ngModelChange)="markDirty()"
-                class="text-xl font-semibold text-text-primary bg-transparent border-none outline-none"
-                placeholder="Título do formulário"
-              />
-              @if (state().isSaving) {
-                <span class="text-sm text-text-secondary ml-2">Salvando...</span>
-              } @else if (state().lastSaved) {
-                <span class="text-sm text-text-secondary ml-2">
-                  Salvo às {{ state().lastSaved | date:'HH:mm' }}
-                </span>
-              } @else if (state().isDirty) {
-                <span class="text-sm text-warning ml-2">Não salvo</span>
-              }
-            </div>
-          </div>
-          <div class="flex items-center gap-3">
-            <button
-              (click)="preview()"
-              class="px-4 py-2 border border-border text-text-primary rounded-lg font-medium
-                     hover:bg-surface transition-colors"
-              i18n="@@preview"
-            >
-              Visualizar
-            </button>
-            <button
-              (click)="save()"
-              [disabled]="state().isSaving"
-              class="px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark
-                     transition-colors disabled:opacity-50"
-            >
-              {{ state().isSaving ? 'Salvando...' : 'Salvar' }}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div class="flex-1 flex">
-        <!-- Left Panel: Field Palette -->
-        <aside class="w-64 bg-white border-r border-border p-4 overflow-y-auto">
-          <h3 class="text-sm font-semibold text-text-secondary mb-4" i18n="@@addFields">
-            Adicionar Campos
-          </h3>
-          <div class="space-y-2">
-            @for (fieldType of fieldTypes; track fieldType.value) {
-              <button
-                (click)="addField(fieldType.value)"
-                class="w-full p-3 text-left border border-border rounded-lg hover:border-primary hover:bg-surface
-                       transition-colors"
-              >
-                <span class="text-xl mr-2">{{ fieldType.icon }}</span>
-                <span class="text-sm text-text-primary">{{ fieldType.label }}</span>
-              </button>
-            }
-          </div>
-        </aside>
-
-        <!-- Center Panel: Canvas -->
-        <main class="flex-1 p-6 overflow-y-auto">
-          <div class="max-w-3xl mx-auto">
-            <!-- Sections -->
-            <div
-              cdkDropList
-              (cdkDropListDropped)="dropSection($event)"
-              class="space-y-4"
-            >
-              @for (section of state().sections; track section.id; let sectionIdx = $index) {
-                <div
-                  class="bg-white rounded-xl border-2 transition-colors"
-                  [class.border-primary]="state().selectedSectionId === section.id"
-                  [class.border-border]="state().selectedSectionId !== section.id"
-                >
-                  <!-- Section Header -->
-                  <div
-                    class="px-4 py-3 border-b border-border flex items-center justify-between cursor-move"
-                    cdkDrag
-                  >
-                    <div class="flex items-center gap-2">
-                      <span class="text-text-secondary">☰</span>
-                      <input
-                        type="text"
-                        [(ngModel)]="section.title"
-                        (ngModelChange)="markDirty()"
-                        class="font-medium text-text-primary bg-transparent border-none outline-none"
-                        [placeholder]="'Título da seção ' + (sectionIdx + 1)"
-                      />
-                    </div>
-                    <button
-                      (click)="selectSection(section.id)"
-                      class="text-text-secondary hover:text-primary"
-                    >
-                      ⚙️
-                    </button>
-                  </div>
-
-                  <!-- Fields in Section -->
-                  <div
-                    cdkDropList
-                    [cdkDropListData]="getFieldsBySection(section.id)"
-                    (cdkDropListDropped)="dropField($event, section.id)"
-                    class="p-4 space-y-3 min-h-[100px]"
-                  >
-                    @for (field of getFieldsBySection(section.id); track field.id) {
-                      <div
-                        class="p-4 border border-dashed border-border rounded-lg cursor-pointer hover:border-primary
-                               transition-colors"
-                        [class.border-primary]="state().selectedFieldId === field.id"
-                        [class.bg-surface]="state().selectedFieldId === field.id"
-                        (click)="selectField(field.id)"
-                      >
-                        <div class="flex items-center justify-between">
-                          <span class="text-sm text-text-primary">
-                            {{ getFieldLabel(field) || 'Campo sem label' }}
-                          </span>
-                          <span class="text-xs text-text-secondary">{{ field.field_type }}</span>
-                        </div>
-                      </div>
-                    }
-
-                    @if (getFieldsBySection(section.id).length === 0) {
-                      <p class="text-center text-text-secondary text-sm py-4">
-                        Arraste campos aqui ou clique em um tipo acima
-                      </p>
-                    }
-                  </div>
-                </div>
-              }
-            </div>
-
-            <!-- Add Section Button -->
-            <button
-              (click)="addSection()"
-              class="w-full mt-4 p-4 border-2 border-dashed border-border rounded-xl text-text-secondary
-                     hover:border-primary hover:text-primary transition-colors text-center"
-            >
-              + Adicionar Seção
-            </button>
-          </div>
-        </main>
-
-        <!-- Right Panel: Properties -->
-        <aside class="w-80 bg-white border-l border-border p-4 overflow-y-auto">
-          <h3 class="text-sm font-semibold text-text-secondary mb-4" i18n="@@properties">
-            Propriedades
-          </h3>
-
-          @if (selectedField()) {
-            <div class="space-y-4">
-              <div>
-                <label class="block text-xs font-medium text-text-secondary mb-1" i18n="@@label">Label</label>
-                <input
-                  type="text"
-                  [(ngModel)]="selectedField()!.label"
-                  (ngModelChange)="markDirty()"
-                  class="w-full px-3 py-2 border border-border rounded-lg text-sm"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-text-secondary mb-1" i18n="@@placeholder">
-                  Placeholder
-                </label>
-                <input
-                  type="text"
-                  [(ngModel)]="selectedField()!.placeholder"
-                  (ngModelChange)="markDirty()"
-                  class="w-full px-3 py-2 border border-border rounded-lg text-sm"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-text-secondary mb-1" i18n="@@helperText">
-                  Texto de ajuda
-                </label>
-                <input
-                  type="text"
-                  [(ngModel)]="selectedField()!.helper_text"
-                  (ngModelChange)="markDirty()"
-                  class="w-full px-3 py-2 border border-border rounded-lg text-sm"
-                />
-              </div>
-              <div class="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="selectedField()!.is_required"
-                  (ngModelChange)="markDirty()"
-                  id="is_required"
-                  class="w-4 h-4 text-primary border-border rounded"
-                />
-                <label for="is_required" class="text-sm text-text-primary" i18n="@@required">
-                  Obrigatório
-                </label>
-              </div>
-            </div>
-          } @else {
-            <p class="text-text-secondary text-sm" i18n="@@selectFieldToEdit">
-              Selecione um campo para editar suas propriedades
-            </p>
-          }
-        </aside>
-      </div>
-    </div>
-  `,
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterLink, 
+    TranslateModule, 
+    DragDropModule
+  ],
+  templateUrl: './form-builder-editor.component.html',
+  styleUrl: './form-builder-editor.component.scss'
 })
 export class FormBuilderEditorComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -303,7 +100,7 @@ export class FormBuilderEditorComponent implements OnInit {
       .single();
 
     if (template) {
-      this.title = (template.title as any)?.[this.i18n.currentLang()] || '';
+      this.title = (template.title as any)?.[this.i18n.currentLang()] || (template.title as any)?.['pt'] || '';
     }
 
     const { data: sections } = await this.supabase.client
@@ -343,6 +140,17 @@ export class FormBuilderEditorComponent implements OnInit {
       ...s,
       sections: [...s.sections, newSection],
       isDirty: true,
+      selectedSectionId: newSection.id,
+      selectedFieldId: null
+    }));
+  }
+
+  removeSection(id: string): void {
+    this.state.update(s => ({
+      ...s,
+      sections: s.sections.filter(sec => sec.id !== id),
+      fields: s.fields.filter(f => f.section_id !== id),
+      isDirty: true
     }));
   }
 
@@ -351,7 +159,7 @@ export class FormBuilderEditorComponent implements OnInit {
       this.addSection();
     }
 
-    const sectionId = this.state().selectedSectionId || this.state().sections[0]?.id;
+    const sectionId = this.state().selectedSectionId || this.state().sections[this.state().sections.length - 1]?.id;
     if (!sectionId) return;
 
     const newField: FormField = {
@@ -383,6 +191,14 @@ export class FormBuilderEditorComponent implements OnInit {
     }));
   }
 
+  removeField(id: string): void {
+    this.state.update(s => ({
+      ...s,
+      fields: s.fields.filter(f => f.id !== id),
+      isDirty: true
+    }));
+  }
+
   getFieldsBySection(sectionId: string): FormField[] {
     return this.state().fields.filter((f) => f.section_id === sectionId);
   }
@@ -392,11 +208,16 @@ export class FormBuilderEditorComponent implements OnInit {
   }
 
   selectField(id: string): void {
-    this.state.update((s) => ({ ...s, selectedFieldId: id }));
+    const field = this.state().fields.find(f => f.id === id);
+    this.state.update((s) => ({ ...s, selectedFieldId: id, selectedSectionId: field?.section_id || null }));
   }
 
   selectedField(): FormField | null {
     return this.state().fields.find((f) => f.id === this.state().selectedFieldId) || null;
+  }
+
+  selectedSection(): FormSection | null {
+    return this.state().sections.find((s) => s.id === this.state().selectedSectionId) || null;
   }
 
   getFieldLabel(field: FormField): string {
@@ -411,16 +232,20 @@ export class FormBuilderEditorComponent implements OnInit {
   dropSection(event: CdkDragDrop<FormSection[]>): void {
     const sections = [...this.state().sections];
     moveItemInArray(sections, event.previousIndex, event.currentIndex);
+    sections.forEach((s, i) => s.display_order = i);
     this.state.update((s) => ({ ...s, sections, isDirty: true }));
   }
 
   dropField(event: CdkDragDrop<FormField[]>, sectionId: string): void {
-    const fields = this.state().fields.map((f) => {
-      if (f.section_id === sectionId) {
-        return { ...f, display_order: event.currentIndex };
-      }
-      return f;
-    });
+    const fields = [...this.state().fields];
+    // This logic needs to be more robust for cross-section dragging if enabled, 
+    // but for now we'll just handle reordering within same section
+    const sectionFields = fields.filter(f => f.section_id === sectionId);
+    moveItemInArray(sectionFields, event.previousIndex, event.currentIndex);
+    
+    // Update display orders
+    sectionFields.forEach((f, i) => f.display_order = i);
+    
     this.state.update((s) => ({ ...s, fields, isDirty: true }));
   }
 

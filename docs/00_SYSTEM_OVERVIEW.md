@@ -1,7 +1,7 @@
 # Labs Will - Documentacao Geral do Sistema
 
 ## Visao Geral
-Labs Will e um SaaS de formularios dinamicos para assessores de investimentos. O administrador (assessor) gerencia formularios personalizaveis que seus clientes preenchem. Os dados sao armazenados e notificados por e-mail.
+Labs Will e uma ferramenta de formularios dinamicos para assessores de investimentos. O administrador (assessor) gerencia formularios personalizaveis que seus clientes preenchem. Os dados sao armazenados e notificados por e-mail.
 
 ## Stack Tecnologica
 - **Frontend**: Angular 19+ (standalone components, signals, typed forms)

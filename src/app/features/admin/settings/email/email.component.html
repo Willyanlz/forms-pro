@@ -1,0 +1,167 @@
+<div class="min-h-screen bg-[#F8FAFC] dark:bg-[#0F172A] p-4 md:p-8 transition-colors duration-300">
+  <div class="max-w-3xl mx-auto space-y-8">
+    <!-- Header Card -->
+    <header class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-6">
+        <a routerLink="/admin" class="w-12 h-12 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all border border-slate-100 dark:border-slate-700">
+          <span class="text-xl">←</span>
+        </a>
+        <div>
+          <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight" i18n="@@emailSettings">E-mail</h1>
+          <p class="text-slate-500 dark:text-slate-400 font-medium" i18n="@@emailSettingsDesc">Configure as conexões para envio de notificações</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Settings Card -->
+    <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/50 rounded-[2.5rem] shadow-xl shadow-slate-200/40 dark:shadow-none overflow-hidden">
+      <form (ngSubmit)="onSubmit()" class="p-8 md:p-12 space-y-10">
+        
+        <!-- Provider Selector -->
+        <div class="space-y-4">
+          <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Provedor de E-mail</label>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            @for (provider of providers; track provider) {
+              <button
+                type="button"
+                (click)="settings.email_provider = provider"
+                class="group relative p-5 border-2 rounded-2xl transition-all text-left overflow-hidden"
+                [class]="settings.email_provider === provider
+                  ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-lg shadow-primary/10 dark:shadow-none'
+                  : 'border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 hover:border-slate-200 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md'"
+              >
+                <div class="flex items-center justify-between relative z-10">
+                  <span class="font-bold text-sm" [class.text-primary]="settings.email_provider === provider" [class.text-slate-600]="settings.email_provider !== provider" [class.dark:text-slate-400]="settings.email_provider !== provider">
+                    {{ getProviderLabel(provider) }}
+                  </span>
+                  <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                       [class.border-primary]="settings.email_provider === provider"
+                       [class.bg-primary]="settings.email_provider === provider"
+                       [class.border-slate-200]="settings.email_provider !== provider"
+                       [class.dark:border-slate-700]="settings.email_provider !== provider">
+                    @if (settings.email_provider === provider) {
+                      <span class="text-[10px] text-white">✓</span>
+                    }
+                  </div>
+                </div>
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-slate-50 dark:border-slate-800">
+          @switch (settings.email_provider) {
+            @case ('resend') {
+              <div class="space-y-6 animate-fade-in">
+                <div class="grid grid-cols-1 gap-6">
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1" i18n="@@resendApiKey">API Key do Resend</label>
+                    <input
+                      type="password"
+                      [(ngModel)]="settings.resend_api_key"
+                      name="resend_api_key"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all outline-none text-slate-900 dark:text-white"
+                      placeholder="re_xxxxxxxxxxxx"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1" i18n="@@resendFromEmail">Email de Remetente</label>
+                    <input
+                      type="email"
+                      [(ngModel)]="settings.resend_from_email"
+                      name="resend_from_email"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all outline-none text-slate-900 dark:text-white"
+                      placeholder="contato@seudominio.com"
+                    />
+                  </div>
+                </div>
+              </div>
+            }
+            @case ('smtp') {
+              <div class="space-y-6 animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1" i18n="@@smtpHost">Servidor SMTP</label>
+                    <input
+                      type="text"
+                      [(ngModel)]="settings.smtp_host"
+                      name="smtp_host"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all outline-none text-slate-900 dark:text-white"
+                      placeholder="smtp.example.com"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1" i18n="@@smtpPort">Porta</label>
+                    <input
+                      type="number"
+                      [(ngModel)]="settings.smtp_port"
+                      name="smtp_port"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all outline-none text-slate-900 dark:text-white"
+                    />
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1" i18n="@@smtpUser">Usuário</label>
+                    <input
+                      type="text"
+                      [(ngModel)]="settings.smtp_user"
+                      name="smtp_user"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all outline-none text-slate-900 dark:text-white"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1" i18n="@@smtpPassword">Senha</label>
+                    <input
+                      type="password"
+                      [(ngModel)]="settings.smtp_password"
+                      name="smtp_password"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all outline-none text-slate-900 dark:text-white"
+                    />
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 py-4 px-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl">
+                  <div class="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="settings.smtp_secure"
+                      name="smtp_secure"
+                      id="smtp_secure"
+                      class="sr-only peer"
+                    />
+                    <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                  </div>
+                  <label for="smtp_secure" class="text-sm font-bold text-slate-700 dark:text-slate-300" i18n="@@useTls">
+                    Usar Conexão Segura (TLS/SSL)
+                  </label>
+                </div>
+              </div>
+            }
+            @case ('none') {
+              <div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-[2rem] border-2 border-dashed border-slate-100 dark:border-slate-800">
+                <div class="text-6xl mb-4 opacity-50">📭</div>
+                <p class="text-slate-500 dark:text-slate-500 font-bold uppercase tracking-widest text-xs" i18n="@@noEmailConfigured">
+                  Nenhum provedor selecionado
+                </p>
+                <p class="text-slate-400 dark:text-slate-600 text-sm mt-2 max-w-xs mx-auto">
+                  As notificações de novas respostas não serão enviadas por e-mail.
+                </p>
+              </div>
+            }
+          }
+        </div>
+
+        <div class="pt-10 flex justify-end">
+          <button
+            type="submit"
+            [disabled]="saving()"
+            class="px-10 py-4 bg-slate-900 dark:bg-primary text-white rounded-2xl font-bold hover:bg-slate-800 dark:hover:bg-primary-dark
+                   transition-all disabled:opacity-50 active:scale-95 shadow-xl shadow-slate-200 dark:shadow-none"
+          >
+            {{ saving() ? 'Salvando...' : 'Salvar Alterações' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

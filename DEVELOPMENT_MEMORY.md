@@ -2,22 +2,17 @@
 
 ## Ultimo ponto de parada
 - Data: 2026-04-23
-- Contexto: runtime da app estabilizado e Supabase remoto publicado parcialmente
+- Contexto: UI/UX Overhaul concluido, sistema mais clean e arredondado, foco no produto final.
+- Test User: willyangenaro4321@gmail.com / 97602211
 
 ## O que foi ajustado neste ciclo
-- Corrigido erro de runtime `$localize is not defined` com `@angular/localize` em `polyfills.ts`
-- Confirmado `npm run start` com resposta HTTP 200 em instancia limpa
-- Adicionados atalhos claros para Perfil, Tema, Email, WhatsApp e Geral no dashboard
-- Inicializado Supabase CLI com `supabase init`
-- Linkado o projeto remoto `dbwbjxgxwizgfrrcibfh`
-- Criadas edge functions:
-  - `supabase/functions/send-email/index.ts`
-  - `supabase/functions/rate-limit/index.ts`
-  - `supabase/functions/webhook/index.ts`
-- Publicadas no remoto as functions `send-email`, `rate-limit` e `webhook`
-- Corrigida a migration de schema com compatibilidade entre `uuid_generate_v4()` e `gen_random_uuid()`
-- Ajustados os seeds para buscar automaticamente o primeiro usuario de `auth.users`
-- Executado `npx supabase db push` com sucesso para o schema remoto
+- Redesenhada a Landing Page com foco em "Forms Pro" (removido tom SaaS)
+- Aplicado novo Design System com border-radius maiores (12px, 20px, 32px) e sombras suaves
+- Refatorado Dashboard de Submissões para um visual premium com cards e glassmorphism
+- Atualizado Form Builder Editor para ser mais intuitivo e limpo
+- Simplificadas as configuracoes de E-mail (Resend/SMTP)
+- Atualizada documentacao técnica e de visão geral
+- Registrados dados do usuário de teste para validação futura
 
 ## Estado verificado
 - `npm run build` passa
@@ -27,8 +22,8 @@
 - Seeds remotos foram pulados com `NOTICE` porque ainda nao existe usuario em `auth.users`
 
 ## Onde retomar
-1. Criar o primeiro usuario admin no Supabase Auth
-2. Popular `admin_profile`, `app_settings` e os templates iniciais para esse usuario
+1. Registrar o usuario `willyangenaro4321@gmail.com` no Supabase Auth
+2. Validar fluxo completo com o novo usuario
 3. Configurar bucket `profile-images`
 4. Validar `/admin/settings/appearance`
 5. Subir Docker Desktop

@@ -1,0 +1,129 @@
+<div class="min-h-screen bg-[#F8FAFC] dark:bg-[#0F172A] p-4 md:p-8 transition-colors duration-300">
+  <div class="max-w-7xl mx-auto space-y-8">
+    <!-- Header Card -->
+    <header class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-6">
+        <a routerLink="/admin" class="w-12 h-12 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all border border-slate-100 dark:border-slate-700">
+          <span class="text-xl">←</span>
+        </a>
+        <div>
+          <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight" i18n="@@submissions">Respostas</h1>
+          <p class="text-slate-500 dark:text-slate-400 font-medium" i18n="@@submissionsDesc">Gerencie e analise as submissões dos seus formulários</p>
+        </div>
+      </div>
+      <button
+        (click)="exportCsv()"
+        class="px-6 py-3.5 bg-slate-900 dark:bg-primary text-white rounded-2xl font-bold hover:bg-slate-800 dark:hover:bg-primary-dark transition-all active:scale-95 flex items-center gap-2 shadow-lg shadow-slate-200 dark:shadow-none"
+        i18n="@@exportCsv"
+      >
+        <span>📥</span>
+        Exportar CSV
+      </button>
+    </header>
+
+    <!-- Filters Card -->
+    <div class="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-slate-200/60 dark:border-slate-800/50 rounded-[2rem] p-6 shadow-sm">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="relative flex-1">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+          <input
+            type="text"
+            [(ngModel)]="filters.name"
+            (ngModelChange)="loadSubmissions()"
+            placeholder="Buscar por nome ou e-mail..."
+            class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500"
+          />
+        </div>
+        <div class="relative min-w-[240px]">
+          <select
+            [(ngModel)]="filters.status"
+            (ngModelChange)="loadSubmissions()"
+            class="w-full appearance-none pl-4 pr-10 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all outline-none cursor-pointer text-slate-900 dark:text-white"
+          >
+            <option value="">Todos os status</option>
+            <option value="new">Novo</option>
+            <option value="read">Lido</option>
+            <option value="archived">Arquivado</option>
+          </select>
+          <span class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">▼</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/50 rounded-[2.5rem] shadow-xl shadow-slate-200/40 dark:shadow-none overflow-hidden">
+      @if (loading()) {
+        <div class="p-20 text-center">
+          <div class="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p class="text-slate-400 dark:text-slate-500 font-medium">Carregando submissões...</p>
+        </div>
+      } @else if (submissions().length === 0) {
+        <div class="p-20 text-center">
+          <div class="text-7xl mb-6 animate-bounce">📬</div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2" i18n="@@noSubmissionsYet">
+            Silêncio por aqui...
+          </h2>
+          <p class="text-slate-500 dark:text-slate-400 font-medium max-w-sm mx-auto">
+            Aguardando as primeiras respostas dos seus formulários. Compartilhe o link para começar!
+          </p>
+        </div>
+      } @else {
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/50 dark:bg-slate-800/30">
+                <th class="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800" i18n="@@name">Nome</th>
+                <th class="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800" i18n="@@form">Formulário</th>
+                <th class="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800" i18n="@@date">Data</th>
+                <th class="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800" i18n="@@status">Status</th>
+                <th class="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 text-right" i18n="@@actions">Detalhes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
+              @for (sub of submissions(); track sub.id) {
+                <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer" [routerLink]="['/admin/submissions', sub.id]">
+                  <td class="px-8 py-6">
+                    <div class="font-bold text-slate-900 dark:text-white">{{ sub.submitter_name || 'Anônimo' }}</div>
+                    @if (sub.submitter_email) {
+                      <div class="text-sm text-slate-400 dark:text-slate-500 font-medium">{{ sub.submitter_email }}</div>
+                    }
+                  </td>
+                  <td class="px-8 py-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-semibold">
+                      {{ sub.template_title }}
+                    </div>
+                  </td>
+                  <td class="px-8 py-6 text-slate-500 dark:text-slate-400 font-medium text-sm">
+                    {{ formatDate(sub.submitted_at) }}
+                  </td>
+                  <td class="px-8 py-6">
+                    <span
+                      class="px-4 py-1.5 text-xs font-bold rounded-full uppercase tracking-wider"
+                      [class]="getStatusClass(sub.status ?? 'new')"
+                    >
+                      {{ getStatusLabel(sub.status ?? 'new') }}
+                    </span>
+                  </td>
+                  <td class="px-8 py-6 text-right">
+                    <div class="w-10 h-10 inline-flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl group-hover:bg-primary group-hover:text-white dark:group-hover:bg-primary-dark transition-all shadow-sm">
+                      <span>→</span>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="px-8 py-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/10">
+          <app-pagination
+            [currentPage]="currentPage()"
+            [totalPages]="totalPages()"
+            (pageChange)="onPageChange($event)"
+          />
+        </div>
+      }
+    </div>
+  </div>
+</div>

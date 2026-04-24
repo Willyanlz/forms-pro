@@ -24,6 +24,7 @@ module.exports = {
         text: {
           primary: 'var(--color-text-primary)',
           secondary: 'var(--color-text-secondary)',
+          muted: 'var(--color-text-muted)',
         },
         primary: {
           DEFAULT: 'var(--color-primary)',
@@ -59,7 +60,18 @@ module.exports = {
         '4xl': '2.25rem',
       },
       borderRadius: {
-        'card': '12px',
+        'sm': 'var(--radius-sm)',
+        'md': 'var(--radius-md)',
+        'lg': 'var(--radius-lg)',
+        'xl': 'var(--radius-xl)',
+        'card': 'var(--radius-lg)',
+        'full': 'var(--radius-full)',
+      },
+      boxShadow: {
+        'sm': 'var(--shadow-sm)',
+        'md': 'var(--shadow-md)',
+        'lg': 'var(--shadow-lg)',
+        'xl': 'var(--shadow-xl)',
       },
     },
   },

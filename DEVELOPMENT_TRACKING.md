@@ -1,8 +1,9 @@
 # Labs Will - Development Tracking
 
 ## Status Atual
-**Fase**: Supabase remoto publicado [EM ANDAMENTO]
+**Fase**: UI/UX Overhaul e Scope Refinement [CONCLUIDA]
 **Ultima Atualizacao**: 2026-04-23
+**Test User**: willyangenaro4321@gmail.com / 97602211
 
 ## Fases Concluidas
 
@@ -42,9 +43,26 @@
 - [ ] Validacao funcional tela a tela
 - [ ] Revisao de regressao por fluxo
 
+### Fase 12 - UI/UX Overhaul & Scope Refinement [CONCLUIDA]
+- [x] Redesign completo da Landing Page (Clean, rounded, glassmorphism)
+- [x] Remocao de mencoes a SaaS e foco no produto final
+- [x] Refinamento visual do Submissions Dashboard
+- [x] Refinamento visual do Form Builder Editor (adicionada funcionalidade de remocao)
+- [x] Refinamento visual das configuracoes de E-mail (Resend/SMTP)
+- [x] Atualizacao do Design System (border-radius, shadows, colors)
+- [x] Limpeza de documentacao (SYSTEM.md, 00_SYSTEM_OVERVIEW.md)
+
+### Fase 13 - Component Standardization & Accessibility [CONCLUIDA]
+- [x] Padronizacao de componentes para arquivos separados (.ts, .html, .scss)
+- [x] Refatoracao de Landing, Dashboard, Form Builder, Submissions, Settings e Selectors
+- [x] Implementacao de `ThemeSelectorComponent` funcional (Light/Dark mode)
+- [x] Correcao de contraste de cores (Textos, Placeholders, Hovers)
+- [x] Correcao do switch de idiomas (i18n path fix)
+- [x] Atualizacao das diretrizes de desenvolvimento no SYSTEM.md
+
 ## Proximo Passo
-- Criar o primeiro usuario admin no Supabase Auth
-- Popular `admin_profile`, `app_settings` e templates iniciais para esse usuario
+- Registrar o usuario `willyangenaro4321@gmail.com` no Supabase Auth
+- Validar fluxo completo com o novo usuario
 - Configurar bucket `profile-images`
 - Validar a aplicacao fora do sandbox com `npm run start`
 - Subir Docker Desktop para habilitar `supabase start`

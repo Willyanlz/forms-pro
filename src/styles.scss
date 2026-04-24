@@ -65,3 +65,14 @@ a {
     background: var(--color-text-secondary);
   }
 }
+
+// Placeholder styling
+::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.dark ::placeholder {
+  color: #64748b; // slate-500
+}
+

@@ -5,10 +5,10 @@
 
 :root {
   // Primary palette (customizable by admin)
-  --color-primary: #F5A623;
-  --color-primary-dark: #D4881A;
-  --color-secondary: #1A1A2E;
-  --color-accent: #E8F4FD;
+  --color-primary: #2563EB; // Deeper blue for better contrast
+  --color-primary-dark: #1D4ED8;
+  --color-secondary: #64748B;
+  --color-accent: #F1F5F9;
 
   // Backgrounds & surfaces
   --color-background: #FFFFFF;
@@ -16,8 +16,9 @@
   --color-border: #E2E8F0;
 
   // Text
-  --color-text-primary: #1A1A2E;
-  --color-text-secondary: #64748B;
+  --color-text-primary: #0F172A; // Darker slate
+  --color-text-secondary: #475569; // Slate 600
+  --color-text-muted: #94A3B8; // Slate 400 (for placeholders)
 
   // Semantic
   --color-success: #10B981;
@@ -25,14 +26,16 @@
   --color-warning: #F59E0B;
 
   // Shadows
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
 
   // Border radius
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
 
   // Transitions

@@ -1,0 +1,12 @@
+<button
+  type="button"
+  (click)="themeService.toggleDarkMode()"
+  class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-slate-500 hover:text-primary hover:bg-primary/5 transition-all active:scale-95 shadow-sm"
+  [title]="themeService.isDarkMode() ? 'Mudar para tema claro' : 'Mudar para tema escuro'"
+>
+  @if (themeService.isDarkMode()) {
+    <span class="text-xl">🌙</span>
+  } @else {
+    <span class="text-xl">☀️</span>
+  }
+</button>
