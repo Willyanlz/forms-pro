@@ -6,7 +6,7 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 @Component({
   selector: 'app-theme-selector',
   standalone: true,
-  imports: [CommonModule, ClickOutsideDirective],
+  imports: [CommonModule],
   templateUrl: './theme-selector.component.html',
   styleUrl: './theme-selector.component.scss'
 })

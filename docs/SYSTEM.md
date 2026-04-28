@@ -20,12 +20,21 @@ src/app/
 
 ## Padrao de Desenvolvimento
 ### Componentes
-Todos os componentes devem seguir o padrao de arquivos separados:
-- `component_name.component.ts`: Logica (Angular Component)
-- `component_name.component.html`: Estrutura (Template)
-- `component_name.component.scss`: Estilo (Styles)
+✅ **PADRÃO OBRIGATÓRIO PARA TODOS OS COMPONENTES, SEM EXCEÇÃO**
 
-Evite o uso de `template` ou `styles` inline no decorator `@Component`.
+Todos os componentes deste projeto DEVEM ser separados obrigatoriamente em 3 arquivos distintos:
+| Arquivo | Finalidade |
+|---------|------------|
+| `nome-componente.component.ts` | Lógica TypeScript / Decorator @Component |
+| `nome-componente.component.html` | Template HTML (nenhum template inline permitido) |
+| `nome-componente.component.scss` | Estilos SCSS (nenhum style inline permitido) |
+
+🚫 **PROIBIDO ABSOLUTAMENTE:**
+- Uso de `template: ''` inline no @Component
+- Uso de `styles: []` inline no @Component
+- Qualquer componente com menos de 3 arquivos separados
+
+⚠️ Esta regra não tem exceções. Qualquer componente novo criado deve seguir este padrão.
 
 ### Estilizacao e UX
 - Priorize o uso de variaveis do `_variables.scss` via Tailwind ou SCSS.

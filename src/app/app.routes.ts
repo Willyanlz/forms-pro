@@ -24,6 +24,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'contact',
+    loadComponent: () =>
+      import('./features/forms/form-view/form-view.component').then(
+        (m) => m.FormViewComponent
+      ),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./features/auth/login/login.component').then(
@@ -42,6 +49,11 @@ export const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
+  {
+    path: 'super-admin',
+    loadChildren: () =>
+      import('./features/super-admin/super-admin.routes').then((m) => m.SUPER_ADMIN_ROUTES),
   },
   {
     path: '**',

@@ -2,13 +2,15 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { SupabaseService } from '@core/services/supabase.service';
 import { AuthService } from '@core/services/auth.service';
 import { I18nService } from '@core/services/i18n.service';
 import { ToastService } from '@core/services/toast.service';
 import { FormTemplate, FormSection, FormField, FieldType } from '@core/models';
+import { LanguageSelectorComponent } from '@shared/components/language-selector/language-selector.component';
+import { ThemeSelectorComponent } from '@shared/components/theme-selector/theme-selector.component';
 
 interface FormEditorState {
   template: FormTemplate | null;
@@ -25,11 +27,13 @@ interface FormEditorState {
   selector: 'app-form-builder-editor',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    RouterLink, 
-    TranslateModule, 
-    DragDropModule
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    TranslateModule,
+    DragDropModule,
+    LanguageSelectorComponent,
+    ThemeSelectorComponent
   ],
   templateUrl: './form-builder-editor.component.html',
   styleUrl: './form-builder-editor.component.scss'
@@ -39,8 +43,9 @@ export class FormBuilderEditorComponent implements OnInit {
   private router = inject(Router);
   private supabase = inject(SupabaseService);
   private auth = inject(AuthService);
-  private i18n = inject(I18nService);
+  public i18n = inject(I18nService);
   private toast = inject(ToastService);
+  private translate = inject(TranslateService);
 
   state = signal<FormEditorState>({
     template: null,
@@ -56,20 +61,20 @@ export class FormBuilderEditorComponent implements OnInit {
   title = '';
   autoSaveInterval: any;
 
-  fieldTypes: Array<{ value: FieldType; label: string; icon: string }> = [
-    { value: 'text', label: 'Texto', icon: '📝' },
-    { value: 'textarea', label: 'Texto Longo', icon: '📄' },
-    { value: 'email', label: 'Email', icon: '📧' },
-    { value: 'phone', label: 'Telefone', icon: '📱' },
-    { value: 'number', label: 'Número', icon: '🔢' },
-    { value: 'date', label: 'Data', icon: '📅' },
-    { value: 'cpf', label: 'CPF', icon: '🆔' },
-    { value: 'cnpj', label: 'CNPJ', icon: '🏢' },
-    { value: 'cep', label: 'CEP', icon: '📮' },
-    { value: 'select', label: 'Seleção', icon: '📋' },
-    { value: 'radio', label: 'Opção Única', icon: '⭕' },
-    { value: 'checkbox', label: 'Múltipla Escolha', icon: '☑️' },
-    { value: 'toggle', label: 'Interruptor', icon: '🔘' },
+  fieldTypes: Array<{ value: FieldType; labelKey: string; icon: string }> = [
+    { value: 'text', labelKey: 'admin.form_builder.field_types.text', icon: '📝' },
+    { value: 'textarea', labelKey: 'admin.form_builder.field_types.textarea', icon: '📄' },
+    { value: 'email', labelKey: 'admin.form_builder.field_types.email', icon: '📧' },
+    { value: 'phone', labelKey: 'admin.form_builder.field_types.phone', icon: '📱' },
+    { value: 'number', labelKey: 'admin.form_builder.field_types.number', icon: '🔢' },
+    { value: 'date', labelKey: 'admin.form_builder.field_types.date', icon: '📅' },
+    { value: 'cpf', labelKey: 'admin.form_builder.field_types.cpf', icon: '🆔' },
+    { value: 'cnpj', labelKey: 'admin.form_builder.field_types.cnpj', icon: '🏢' },
+    { value: 'cep', labelKey: 'admin.form_builder.field_types.cep', icon: '📮' },
+    { value: 'select', labelKey: 'admin.form_builder.field_types.select', icon: '📋' },
+    { value: 'radio', labelKey: 'admin.form_builder.field_types.radio', icon: '⭕' },
+    { value: 'checkbox', labelKey: 'admin.form_builder.field_types.checkbox', icon: '☑️' },
+    { value: 'toggle', labelKey: 'admin.form_builder.field_types.toggle', icon: '🔘' },
   ];
 
   async ngOnInit(): Promise<void> {
@@ -225,6 +230,19 @@ export class FormBuilderEditorComponent implements OnInit {
     return (field.label as any)?.[lang] || (field.label as any)?.['pt'] || '';
   }
 
+  getMultilangValue(obj: any): string {
+    if (!obj) return '';
+    const lang = this.i18n.currentLang();
+    return obj[lang] || obj['pt'] || '';
+  }
+
+  setMultilangValue(obj: any, value: string): void {
+    if (!obj) return;
+    const lang = this.i18n.currentLang();
+    obj[lang] = value;
+    this.markDirty();
+  }
+
   markDirty(): void {
     this.state.update((s) => ({ ...s, isDirty: true }));
   }
@@ -242,10 +260,10 @@ export class FormBuilderEditorComponent implements OnInit {
     // but for now we'll just handle reordering within same section
     const sectionFields = fields.filter(f => f.section_id === sectionId);
     moveItemInArray(sectionFields, event.previousIndex, event.currentIndex);
-    
+
     // Update display orders
     sectionFields.forEach((f, i) => f.display_order = i);
-    
+
     this.state.update((s) => ({ ...s, fields, isDirty: true }));
   }
 
@@ -292,9 +310,9 @@ export class FormBuilderEditorComponent implements OnInit {
         template: { ...s.template, id: templateId } as FormTemplate,
       }));
 
-      this.toast.success('Formulário salvo com sucesso!');
+      this.toast.success(this.translate.instant('admin.form_builder.save_success'));
     } catch (err: any) {
-      this.toast.error(err.message || 'Erro ao salvar');
+      this.toast.error(err.message || this.translate.instant('common.error'));
       this.state.update((s) => ({ ...s, isSaving: false }));
     }
   }

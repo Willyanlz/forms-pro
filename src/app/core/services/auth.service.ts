@@ -13,9 +13,28 @@ export class AuthService {
     private readonly supabaseService: SupabaseService,
     private readonly router: Router
   ) {
+    // Recuperar sessao do localStorage no inicio
+    const storedUser = localStorage.getItem('auth_user');
+    if (storedUser) {
+      try {
+        this.currentUser.set(JSON.parse(storedUser));
+      } catch (e) {
+        localStorage.removeItem('auth_user');
+      }
+    }
+
     this.supabaseService.auth.onAuthStateChange((_event, session) => {
       this.currentUser.set(session?.user ?? null);
       this.isLoading.set(false);
+
+      // Persistir sessao no localStorage para nao perder login
+      if (session?.user) {
+        localStorage.setItem('auth_user', JSON.stringify(session.user));
+        localStorage.setItem('auth_session_expires', session.expires_at?.toString() || '');
+      } else {
+        localStorage.removeItem('auth_user');
+        localStorage.removeItem('auth_session_expires');
+      }
     });
   }
 

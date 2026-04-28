@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService } from '@core/services/supabase.service';
 import { AuthService } from '@core/services/auth.service';
 import { LanguageSelectorComponent } from '@shared/components/language-selector/language-selector.component';
@@ -26,8 +26,8 @@ interface RecentSubmission {
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterLink, 
+    CommonModule,
+    RouterLink,
     TranslateModule,
     LanguageSelectorComponent,
     ThemeSelectorComponent
@@ -38,17 +38,18 @@ interface RecentSubmission {
 export class DashboardComponent implements OnInit {
   private supabase = inject(SupabaseService);
   private auth = inject(AuthService);
+  private translate = inject(TranslateService);
 
   stats = signal<DashboardStats | null>(null);
   recentSubmissions = signal<RecentSubmission[]>([]);
   loading = signal(true);
 
   settingsLinks = [
-    { path: '/admin/settings', icon: '👤', label: 'Perfil', desc: 'Nome, descrição e foto' },
-    { path: '/admin/settings/appearance', icon: '🎨', label: 'Tema', desc: 'Cores e identidade visual' },
-    { path: '/admin/settings/email', icon: '📧', label: 'E-mail', desc: 'Conexão Resend ou SMTP' },
-    { path: '/admin/settings/whatsapp', icon: '💬', label: 'WhatsApp', desc: 'Mensagens e suporte' },
-    { path: '/admin/settings/general', icon: '⚙️', label: 'Geral', desc: 'Idiomas e webhooks' },
+    { path: '/admin/settings', icon: '👤', labelKey: 'settings.profile.title', descKey: 'settings.profile.description' },
+    { path: '/admin/settings/appearance', icon: '🎨', labelKey: 'settings.appearance.title', descKey: 'settings.appearance.description' },
+    { path: '/admin/settings/email', icon: '📧', labelKey: 'settings.email.title', descKey: 'settings.email.description' },
+    { path: '/admin/settings/whatsapp', icon: '💬', labelKey: 'settings.whatsapp.title', descKey: 'settings.whatsapp.description' },
+    { path: '/admin/settings/general', icon: '⚙️', labelKey: 'settings.general.title', descKey: 'settings.general.description' },
   ];
 
   async ngOnInit(): Promise<void> {
@@ -58,10 +59,10 @@ export class DashboardComponent implements OnInit {
   getStatCards() {
     const s = this.stats();
     return [
-      { label: 'Formulários', value: s?.totalForms || 0, icon: '📝', iconBg: 'bg-blue-50 text-blue-500 dark:bg-blue-900/30 dark:text-blue-400' },
-      { label: 'Respostas', value: s?.totalSubmissions || 0, icon: '📬', iconBg: 'bg-emerald-50 text-emerald-500 dark:bg-emerald-900/30 dark:text-emerald-400' },
-      { label: 'Este Mês', value: s?.submissionsThisMonth || 0, icon: '📅', iconBg: 'bg-amber-50 text-amber-500 dark:bg-amber-900/30 dark:text-amber-400' },
-      { label: 'Mês Passado', value: s?.submissionsLastMonth || 0, icon: '📉', iconBg: 'bg-rose-50 text-rose-500 dark:bg-rose-900/30 dark:text-rose-400' },
+      { label: this.translate.instant('admin.dashboard.total_forms'), value: s?.totalForms || 0, icon: '📝', iconBg: 'bg-blue-50 text-blue-500 dark:bg-blue-900/30 dark:text-blue-400' },
+      { label: this.translate.instant('admin.dashboard.total_submissions'), value: s?.totalSubmissions || 0, icon: '📬', iconBg: 'bg-emerald-50 text-emerald-500 dark:bg-emerald-900/30 dark:text-emerald-400' },
+      { label: this.translate.instant('admin.dashboard.this_month'), value: s?.submissionsThisMonth || 0, icon: '📅', iconBg: 'bg-amber-50 text-amber-500 dark:bg-amber-900/30 dark:text-amber-400' },
+      { label: this.translate.instant('admin.dashboard.last_month'), value: s?.submissionsLastMonth || 0, icon: '📉', iconBg: 'bg-rose-50 text-rose-500 dark:bg-rose-900/30 dark:text-rose-400' },
     ];
   }
 

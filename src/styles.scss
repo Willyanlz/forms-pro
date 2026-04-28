@@ -76,3 +76,76 @@ a {
   color: #64748b; // slate-500
 }
 
+// =============================================
+// Correções de Contraste e Acessibilidade
+// =============================================
+
+// Inputs e campos de texto
+input,
+textarea,
+select {
+  color: var(--color-text-primary) !important;
+  background-color: var(--color-surface);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  color: var(--color-text-primary) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.85;
+}
+
+// Botões e estados Hover
+button {
+  color: inherit;
+}
+
+button.btn-primary,
+button[class*="bg-blue"],
+button[class*="bg-primary"] {
+  color: #FFFFFF !important;
+}
+
+button.btn-primary:hover,
+button[class*="bg-blue"]:hover,
+button[class*="bg-primary"]:hover {
+  color: #FFFFFF !important;
+  filter: brightness(0.85);
+}
+
+button.btn-secondary,
+button[class*="bg-gray"],
+button[class*="bg-secondary"] {
+  color: var(--color-text-primary) !important;
+}
+
+button.btn-secondary:hover,
+button[class*="bg-gray"]:hover,
+button[class*="bg-secondary"]:hover {
+  color: var(--color-text-primary) !important;
+  filter: brightness(0.95);
+}
+
+// Labels em modais e formularios
+label {
+  color: var(--color-text-secondary) !important;
+  font-weight: 500;
+}
+
+.dark label {
+  color: #e2e8f0 !important;
+}
+
+// Garantir contraste minimo WCAG AA
+.text-secondary {
+  color: var(--color-text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--color-text-muted) !important;
+}

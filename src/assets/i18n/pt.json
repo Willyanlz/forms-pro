@@ -7,7 +7,7 @@
     "duplicate": "Duplicar",
     "archive": "Arquivar",
     "loading": "Carregando...",
-    "success": "Operacao realizada com sucesso",
+    "success": "Operação realizada com sucesso",
     "error": "Ocorreu um erro. Tente novamente.",
     "confirm": "Confirmar",
     "back": "Voltar",
@@ -21,11 +21,19 @@
     "no": "Nao"
   },
   "landing": {
+    "ready": "Pronto para uso",
     "hero_cta": "Entrar em Contato",
-    "contact_modal_title": "Como prefere entrar em contato?",
-    "fill_form": "Preencher Formulario",
+    "hero_title_line1": "Gestão Simplificada",
+    "hero_title_line2": "de Formulários.",
+    "hero_description": "Uma solução intuitiva para coletar e gerenciar dados de forma eficiente e segura.",
+    "contact_modal_title": "Como prefira entrar em contato?",
+    "fill_form": "Preencher Formulário",
+    "fillForm": "Preencher Formulário",
     "whatsapp": "Falar no WhatsApp",
     "login": "Entrar",
+    "dashboardPreview": "Dashboard de Submissões",
+    "privacy": "Privacidade",
+    "terms": "Termos",
     "about_title": "Sobre",
     "services_title": "Servicos",
     "service_planning": "Planejamento Financeiro",
@@ -36,7 +44,8 @@
     "service_pf_desc": "Atendimento dedicado para investidores individuais.",
     "service_pj": "Assessoria Pessoa Juridica",
     "service_pj_desc": "Solucoes financeiras para empresas e negocios.",
-    "footer": "Labs Will {{year}}"
+    "footer": "Labs Will {{year}}",
+    "footer_copyright": "Todos os direitos reservados."
   },
   "forms": {
     "title": "Formularios",
@@ -45,7 +54,7 @@
     "back": "Voltar",
     "submit": "Enviar",
     "success_title": "Formulario enviado!",
-    "success_message": "Obrigado! Entraremos em contato em breve.",
+    "success_message": "Obrigado! Entramos em contato em breve.",
     "whatsapp_button": "Falar no WhatsApp",
     "no_forms": "Nenhum formulario disponivel no momento.",
     "sections_count": "{{count}} secoes",
@@ -54,12 +63,18 @@
   "admin": {
     "dashboard": {
       "title": "Dashboard",
-      "total_forms": "Total de Formularios",
+      "description": "Visão geral do seu sistema",
+      "new_form": "Novo Formulário",
+      "total_forms": "Total de Formulários",
       "total_submissions": "Total de Respostas",
-      "this_month": "Este mes",
-      "last_month": "Mes anterior",
-      "recent_submissions": "Ultimas Respostas",
-      "top_forms": "Formularios Mais Respondidos"
+      "this_month": "Este mês",
+      "last_month": "Mês anterior",
+      "recent_submissions": "Últimas Respostas",
+      "recent_label": "Recentes",
+      "view_all": "Ver tudo",
+      "no_submissions": "Nenhuma resposta ainda",
+      "top_forms": "Formulários Mais Respondidos",
+      "settings_title": "Configurações"
     },
     "form_builder": {
       "title": "Construtor de Formularios",
@@ -86,10 +101,28 @@
       "preview": "Visualizar",
       "saving": "Salvando...",
       "saved_at": "Salvo as {{time}}",
+      "pending_changes": "Alterações pendentes",
+      "drop_here": "Arraste elementos aqui para começar",
+      "no_label": "Sem rótulo",
       "save_error": "Erro ao salvar",
       "delete_confirm": "Tem certeza que deseja excluir?",
       "delete_type_confirm": "Esta acao e irreversivel. Digite EXCLUIR para confirmar.",
-      "duplicate_success": "Formulario duplicado com sucesso"
+      "duplicate_success": "Formulario duplicado com sucesso",
+      "field_types": {
+        "text": "Texto",
+        "email": "E-mail",
+        "phone": "Telefone",
+        "number": "Número",
+        "textarea": "Texto Longo",
+        "select": "Seleção",
+        "checkbox": "Checkbox",
+        "radio": "Radio",
+        "date": "Data",
+        "time": "Hora",
+        "cpf": "CPF",
+        "cnpj": "CNPJ",
+        "cep": "CEP"
+      }
     },
     "submissions": {
       "title": "Respostas",
@@ -103,6 +136,8 @@
       "status_archived": "Arquivado",
       "mark_read": "Marcar como lido",
       "export_csv": "Exportar CSV",
+      "export_xlsx": "Exportar Excel",
+      "export_pdf": "Exportar PDF",
       "per_page": "Por pagina",
       "detail_title": "Detalhes da Resposta",
       "edit_submission": "Editar Resposta",
@@ -157,6 +192,7 @@
     },
     "appearance": {
       "title": "Personalizacao de Cores",
+      "description": "Personalize a aparencia do sistema",
       "primary_color": "Cor Primaria",
       "secondary_color": "Cor Secundaria",
       "accent_color": "Cor de Destaque",
@@ -165,6 +201,7 @@
     },
     "email": {
       "title": "Configuracao de E-mail",
+      "description": "Configurar envio de notificacoes por e-mail",
       "provider_resend": "Resend",
       "provider_smtp": "SMTP",
       "provider_none": "Nenhum",
@@ -185,6 +222,7 @@
     },
     "whatsapp": {
       "title": "WhatsApp",
+      "description": "Integracao com WhatsApp para notificacoes",
       "number": "Numero WhatsApp",
       "number_hint": "Ex: +55 11 99999-9999",
       "preview_link": "Preview do link",
@@ -195,6 +233,7 @@
     },
     "general": {
       "title": "Configuracoes Gerais",
+      "description": "Configuracoes gerais do sistema",
       "default_language": "Idioma Padrao",
       "active_languages": "Idiomas Ativos",
       "webhook_url": "Webhook URL (opcional)",
@@ -216,8 +255,15 @@
     "passwords_mismatch": "As senhas nao coincidem"
   },
   "languages": {
-    "pt": "Portugues",
+    "pt": "Português",
     "en": "English",
-    "es": "Espanol"
-  }
+    "es": "Español"
+  },
+  "createForm": "Criar Formulário",
+  "fillForm": "Preencher Formulário",
+  "preview": "Visualizar",
+  "label": "Rótulo",
+  "placeholder": "Texto padrão",
+  "helperText": "Texto de ajuda",
+  "required": "Obrigatório"
 }

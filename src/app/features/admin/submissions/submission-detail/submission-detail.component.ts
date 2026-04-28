@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService } from '@core/services/supabase.service';
 import { AuthService } from '@core/services/auth.service';
 import { FormSubmission } from '@core/models';
@@ -10,107 +10,14 @@ import { FormSubmission } from '@core/models';
   selector: 'app-submission-detail',
   standalone: true,
   imports: [CommonModule, RouterLink, TranslateModule],
-  template: `
-    <div class="min-h-screen bg-surface">
-      <header class="bg-white border-b border-border px-6 py-4">
-        <div class="max-w-4xl mx-auto flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <a routerLink="/admin/submissions" class="text-text-secondary hover:text-text-primary">←</a>
-            <div>
-              <h1 class="text-xl font-semibold text-text-primary" i18n="@@submissionDetail">
-                Detalhe da Resposta
-              </h1>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <button
-              (click)="markAsRead()"
-              class="px-4 py-2 border border-border text-text-primary rounded-lg font-medium
-                     hover:bg-surface transition-colors"
-              i18n="@@markAsRead"
-            >
-              Marcar como lido
-            </button>
-            <button
-              (click)="deleteSubmission()"
-              class="px-4 py-2 border border-error text-error rounded-lg font-medium
-                     hover:bg-error/10 transition-colors"
-              i18n="@@delete"
-            >
-              Excluir
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div class="max-w-4xl mx-auto p-6">
-        @if (loading()) {
-          <div class="bg-white rounded-xl border border-border p-8 animate-pulse">
-            <div class="h-6 bg-surface rounded w-1/3 mb-4"></div>
-            <div class="h-4 bg-surface rounded w-1/2 mb-2"></div>
-            <div class="h-4 bg-surface rounded w-1/4"></div>
-          </div>
-        } @else if (submission()) {
-          <div class="bg-white rounded-xl border border-border p-6">
-            <!-- Header -->
-            <div class="border-b border-border pb-4 mb-6">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h2 class="text-2xl font-bold text-text-primary">
-                    {{ submission()?.template_title }}
-                  </h2>
-                  <p class="text-text-secondary mt-1">
-                    Respondido por {{ submission()?.submitter_name || 'Anônimo' }}
-                    @if (submission()?.submitter_email) {
-                      ({{ submission()?.submitter_email }})
-                    }
-                  </p>
-                </div>
-                <span
-                  class="px-3 py-1 text-sm rounded-full"
-                  [class]="getStatusClass(submission()?.status || '')"
-                >
-                  {{ getStatusLabel(submission()?.status || '') }}
-                </span>
-              </div>
-              <p class="text-sm text-text-secondary mt-2">
-                {{ formatDate(submission()?.submitted_at || '') }}
-              </p>
-            </div>
-
-            <!-- Answers -->
-            <div class="space-y-6">
-              <h3 class="text-lg font-semibold text-text-primary" i18n="@@answers">Respostas</h3>
-              
-              @for (entry of getAnswersEntries(); track entry.key) {
-                <div class="border border-border rounded-lg p-4">
-                  <div class="text-sm font-medium text-text-secondary mb-1">
-                    {{ entry.key }}
-                  </div>
-                  <div class="text-text-primary">
-                    @if (isArray(entry.value)) {
-                      <ul class="list-disc list-inside">
-                        @for (item of entry.value; track item) {
-                          <li>{{ item }}</li>
-                        }
-                      </ul>
-                    } @else {
-                      {{ entry.value }}
-                    }
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-        }
-      </div>
-    </div>
-  `,
+  templateUrl: './submission-detail.component.html',
+  styleUrls: ['./submission-detail.component.scss']
 })
 export class SubmissionDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private supabase = inject(SupabaseService);
   private auth = inject(AuthService);
+  private translate = inject(TranslateService);
 
   submission = signal<FormSubmission | null>(null);
   loading = signal(true);
@@ -155,9 +62,9 @@ export class SubmissionDetailComponent implements OnInit {
 
   getStatusLabel(status: string): string {
     const labels: Record<string, string> = {
-      new: 'Novo',
-      read: 'Lido',
-      archived: 'Arquivado',
+      new: this.translate.instant('submissions.status.new'),
+      read: this.translate.instant('submissions.status.read'),
+      archived: this.translate.instant('submissions.status.archived'),
     };
     return labels[status] || status;
   }

@@ -21,11 +21,19 @@
     "no": "No"
   },
   "landing": {
+    "ready": "Ready to use",
     "hero_cta": "Get in Touch",
+    "hero_title_line1": "Simplified Management",
+    "hero_title_line2": "of Forms.",
+    "hero_description": "An intuitive solution to collect and manage data efficiently and securely.",
     "contact_modal_title": "How would you like to get in touch?",
     "fill_form": "Fill Out a Form",
+    "fillForm": "Fill Out a Form",
     "whatsapp": "Chat on WhatsApp",
     "login": "Sign In",
+    "dashboardPreview": "Submissions Dashboard",
+    "privacy": "Privacy",
+    "terms": "Terms",
     "about_title": "About",
     "services_title": "Services",
     "service_planning": "Financial Planning",
@@ -36,7 +44,8 @@
     "service_pf_desc": "Dedicated service for individual investors.",
     "service_pj": "Corporate Advisory",
     "service_pj_desc": "Financial solutions for companies and businesses.",
-    "footer": "Labs Will {{year}}"
+    "footer": "Labs Will {{year}}",
+    "footer_copyright": "All rights reserved."
   },
   "forms": {
     "title": "Forms",
@@ -54,12 +63,18 @@
   "admin": {
     "dashboard": {
       "title": "Dashboard",
+      "description": "Overview of your system",
+      "new_form": "New Form",
       "total_forms": "Total Forms",
       "total_submissions": "Total Submissions",
       "this_month": "This month",
       "last_month": "Last month",
       "recent_submissions": "Recent Submissions",
-      "top_forms": "Most Answered Forms"
+      "recent_label": "Recent",
+      "view_all": "View all",
+      "no_submissions": "No submissions yet",
+      "top_forms": "Most Answered Forms",
+      "settings_title": "Settings"
     },
     "form_builder": {
       "title": "Form Builder",
@@ -86,10 +101,28 @@
       "preview": "Preview",
       "saving": "Saving...",
       "saved_at": "Saved at {{time}}",
+      "pending_changes": "Pending changes",
+      "drop_here": "Drag elements here to start",
+      "no_label": "No label",
       "save_error": "Error saving",
       "delete_confirm": "Are you sure you want to delete?",
       "delete_type_confirm": "This action is irreversible. Type DELETE to confirm.",
-      "duplicate_success": "Form duplicated successfully"
+      "duplicate_success": "Form duplicated successfully",
+      "field_types": {
+        "text": "Text",
+        "email": "Email",
+        "phone": "Phone",
+        "number": "Number",
+        "textarea": "Long Text",
+        "select": "Select",
+        "checkbox": "Checkbox",
+        "radio": "Radio",
+        "date": "Date",
+        "time": "Time",
+        "cpf": "CPF",
+        "cnpj": "CNPJ",
+        "cep": "CEP"
+      }
     },
     "submissions": {
       "title": "Submissions",
@@ -103,6 +136,8 @@
       "status_archived": "Archived",
       "mark_read": "Mark as read",
       "export_csv": "Export CSV",
+      "export_xlsx": "Export Excel",
+      "export_pdf": "Export PDF",
       "per_page": "Per page",
       "detail_title": "Submission Details",
       "edit_submission": "Edit Submission",
@@ -157,6 +192,7 @@
     },
     "appearance": {
       "title": "Color Customization",
+      "description": "Customize system appearance",
       "primary_color": "Primary Color",
       "secondary_color": "Secondary Color",
       "accent_color": "Accent Color",
@@ -165,6 +201,7 @@
     },
     "email": {
       "title": "Email Settings",
+      "description": "Configure email notifications",
       "provider_resend": "Resend",
       "provider_smtp": "SMTP",
       "provider_none": "None",
@@ -185,6 +222,7 @@
     },
     "whatsapp": {
       "title": "WhatsApp",
+      "description": "WhatsApp integration for notifications",
       "number": "WhatsApp Number",
       "number_hint": "Ex: +55 11 99999-9999",
       "preview_link": "Link preview",
@@ -195,6 +233,7 @@
     },
     "general": {
       "title": "General Settings",
+      "description": "General system settings",
       "default_language": "Default Language",
       "active_languages": "Active Languages",
       "webhook_url": "Webhook URL (optional)",
@@ -216,8 +255,15 @@
     "passwords_mismatch": "Passwords do not match"
   },
   "languages": {
-    "pt": "Portugues",
+    "pt": "Portuguese",
     "en": "English",
-    "es": "Espanol"
-  }
+    "es": "Spanish"
+  },
+  "createForm": "Create Form",
+  "fillForm": "Fill Form",
+  "preview": "Preview",
+  "label": "Label",
+  "placeholder": "Default text",
+  "helperText": "Help text",
+  "required": "Required"
 }

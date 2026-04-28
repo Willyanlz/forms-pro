@@ -21,11 +21,19 @@
     "no": "No"
   },
   "landing": {
+    "ready": "Listo para usar",
     "hero_cta": "Contactar",
+    "hero_title_line1": "Gestión Simplificada",
+    "hero_title_line2": "de Formularios.",
+    "hero_description": "Una solución intuitiva para recopilar y gestionar datos de forma eficiente y segura.",
     "contact_modal_title": "Como prefiere ponerse en contacto?",
     "fill_form": "Completar Formulario",
+    "fillForm": "Completar Formulario",
     "whatsapp": "Hablar por WhatsApp",
     "login": "Iniciar Sesion",
+    "dashboardPreview": "Panel de Respuestas",
+    "privacy": "Privacidad",
+    "terms": "Términos",
     "about_title": "Acerca de",
     "services_title": "Servicios",
     "service_planning": "Planificacion Financiera",
@@ -36,7 +44,8 @@
     "service_pf_desc": "Atencion dedicada para inversores individuales.",
     "service_pj": "Asesoria Persona Juridica",
     "service_pj_desc": "Soluciones financieras para empresas y negocios.",
-    "footer": "Labs Will {{year}}"
+    "footer": "Labs Will {{year}}",
+    "footer_copyright": "Todos los derechos reservados."
   },
   "forms": {
     "title": "Formularios",
@@ -54,12 +63,18 @@
   "admin": {
     "dashboard": {
       "title": "Panel",
+      "description": "Vista general del sistema",
+      "new_form": "Nuevo Formulario",
       "total_forms": "Total de Formularios",
       "total_submissions": "Total de Respuestas",
       "this_month": "Este mes",
       "last_month": "Mes anterior",
       "recent_submissions": "Respuestas Recientes",
-      "top_forms": "Formularios Mas Respondidos"
+      "recent_label": "Recientes",
+      "view_all": "Ver todo",
+      "no_submissions": "Ninguna respuesta aun",
+      "top_forms": "Formularios Mas Respondidos",
+      "settings_title": "Configuraciones"
     },
     "form_builder": {
       "title": "Constructor de Formularios",
@@ -86,10 +101,28 @@
       "preview": "Vista previa",
       "saving": "Guardando...",
       "saved_at": "Guardado a las {{time}}",
+      "pending_changes": "Cambios pendientes",
+      "drop_here": "Arrastre elementos aquí para comenzar",
+      "no_label": "Sin etiqueta",
       "save_error": "Error al guardar",
       "delete_confirm": "Esta seguro de que desea eliminar?",
       "delete_type_confirm": "Esta accion es irreversible. Escriba ELIMINAR para confirmar.",
-      "duplicate_success": "Formulario duplicado con exito"
+      "duplicate_success": "Formulario duplicado con exito",
+      "field_types": {
+        "text": "Texto",
+        "email": "Correo",
+        "phone": "Teléfono",
+        "number": "Número",
+        "textarea": "Texto Largo",
+        "select": "Selección",
+        "checkbox": "Checkbox",
+        "radio": "Radio",
+        "date": "Fecha",
+        "time": "Hora",
+        "cpf": "CPF",
+        "cnpj": "CNPJ",
+        "cep": "CEP"
+      }
     },
     "submissions": {
       "title": "Respuestas",
@@ -103,6 +136,8 @@
       "status_archived": "Archivado",
       "mark_read": "Marcar como leido",
       "export_csv": "Exportar CSV",
+      "export_xlsx": "Exportar Excel",
+      "export_pdf": "Exportar PDF",
       "per_page": "Por pagina",
       "detail_title": "Detalles de la Respuesta",
       "edit_submission": "Editar Respuesta",
@@ -216,8 +251,15 @@
     "passwords_mismatch": "Las contrasenas no coinciden"
   },
   "languages": {
-    "pt": "Portugues",
-    "en": "English",
-    "es": "Espanol"
-  }
+    "pt": "Portugués",
+    "en": "Inglés",
+    "es": "Español"
+  },
+  "createForm": "Crear Formulario",
+  "fillForm": "Completar Formulario",
+  "preview": "Vista previa",
+  "label": "Etiqueta",
+  "placeholder": "Texto predeterminado",
+  "helperText": "Texto de ayuda",
+  "required": "Obligatorio"
 }

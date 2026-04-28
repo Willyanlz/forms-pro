@@ -10,6 +10,21 @@ export class ThemeService {
   isDarkMode = signal(false);
 
   initTheme(): void {
+    // Primeiro verificar tema salvo no localStorage
+    const savedTheme = localStorage.getItem('app_theme');
+
+    if (savedTheme) {
+      const isDark = savedTheme === 'dark';
+      this.isDarkMode.set(isDark);
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      return;
+    }
+
+    // Se não tiver salvo, detectar do sistema
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.isDarkMode.set(prefersDark);
     if (prefersDark) {
@@ -24,8 +39,10 @@ export class ThemeService {
     this.isDarkMode.set(next);
     if (next) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('app_theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('app_theme', 'light');
     }
   }
 
