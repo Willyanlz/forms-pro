@@ -1,0 +1,62 @@
+/* CORREÇÃO TOTAL MODAL PRIMENG */
+
+::ng-deep body .p-dialog {
+    background: #ffffff !important;
+    opacity: 1 !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: none;
+}
+
+::ng-deep body .p-dialog-mask {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(6px);
+}
+
+::ng-deep body .p-dialog-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 12px 12px 0 0;
+    padding: 20px 24px;
+}
+
+::ng-deep body .p-dialog-content {
+    background: #ffffff !important;
+    opacity: 1 !important;
+    padding: 24px;
+}
+
+::ng-deep body .p-dialog-footer {
+    background: #ffffff !important;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 12px 12px;
+    padding: 16px 24px;
+}
+
+/* MODO DARK */
+:host-context(.dark) ::ng-deep body .p-dialog {
+    background: #1f2937 !important;
+}
+
+:host-context(.dark) ::ng-deep body .p-dialog-header {
+    background: #1f2937 !important;
+    border-bottom: 1px solid #374151;
+}
+
+:host-context(.dark) ::ng-deep body .p-dialog-content {
+    background: #1f2937 !important;
+}
+
+:host-context(.dark) ::ng-deep body .p-dialog-footer {
+    background: #1f2937 !important;
+    border-top: 1px solid #374151;
+}
+
+/* REMOVE QUALQUER TRANSPARENCIA */
+::ng-deep .p-component-overlay {
+    opacity: 1 !important;
+}
+
+::ng-deep .p-dialog {
+    z-index: 1000 !important;
+}

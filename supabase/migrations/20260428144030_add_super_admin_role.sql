@@ -15,7 +15,6 @@ BEGIN
     SELECT 1 FROM admin_profile
     WHERE user_id = auth.uid()
     AND is_super_admin = TRUE
-    AND status = 'active'
   );
 END;
 $$ LANGUAGE plpgsql STABLE SECURITY DEFINER;

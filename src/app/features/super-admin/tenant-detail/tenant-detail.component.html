@@ -1,1 +1,250 @@
-<p>tenant-detail works!</p>
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <a routerLink="/super-admin/tenants"
+                class="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </a>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Detalhes do Tenant</h1>
+                @if (tenant) {
+                <p class="text-gray-500 dark:text-gray-400">{{ tenant.name }}</p>
+                }
+            </div>
+        </div>
+
+        @if (tenant) {
+        <div class="flex items-center gap-2">
+            <button (click)="toggleBlock()"
+                class="px-4 py-2 {{ tenant.blocked ? 'bg-green-600 hover:bg-green-700' : 'bg-orange-600 hover:bg-orange-700' }} text-white rounded-lg font-medium transition-colors">
+                {{ tenant.blocked ? 'Desbloquear' : 'Bloquear' }}
+            </button>
+            <button (click)="impersonate()"
+                class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors">
+                Logar como Usuário
+            </button>
+        </div>
+        }
+    </div>
+
+    @if (loading) {
+    <div
+        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
+        <p class="text-gray-500 dark:text-gray-400">Carregando dados do tenant...</p>
+    </div>
+    } @else if (tenant) {
+    <!-- Status Badge -->
+    <div class="flex items-center gap-3">
+        @if (tenant.blocked) {
+        <span
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+            Bloqueado
+        </span>
+        } @else {
+        <span
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+            Ativo
+        </span>
+        }
+
+        <span
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+            {{ tenant.plan?.name || 'Free' }}
+        </span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="border-b border-gray-200 dark:border-gray-700">
+        <nav class="flex space-x-8">
+            <button (click)="setActiveTab('overview')"
+                class="py-4 px-1 border-b-2 font-medium text-sm transition-colors {{ activeTab === 'overview' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300' }}">
+                Visão Geral
+            </button>
+            <button (click)="setActiveTab('forms')"
+                class="py-4 px-1 border-b-2 font-medium text-sm transition-colors {{ activeTab === 'forms' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300' }}">
+                Formulários ({{ forms.length }})
+            </button>
+            <button (click)="setActiveTab('submissions')"
+                class="py-4 px-1 border-b-2 font-medium text-sm transition-colors {{ activeTab === 'submissions' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300' }}">
+                Submissões ({{ submissions.length }})
+            </button>
+        </nav>
+    </div>
+
+    <!-- Tab Content -->
+    @if (activeTab === 'overview') {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Informações Básicas -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Dados do Perfil</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Nome</label>
+                    <p class="text-gray-900 dark:text-white font-medium">{{ tenant.name || '-' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Email</label>
+                    <p class="text-gray-900 dark:text-white">{{ tenant.email }}</p>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Slug</label>
+                    <code
+                        class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-gray-700 dark:text-gray-300">{{ tenant.slug || '-' }}</code>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Telefone</label>
+                    <p class="text-gray-900 dark:text-white">{{ tenant.phone || '-' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Data de
+                        Cadastro</label>
+                    <p class="text-gray-900 dark:text-white">{{ tenant.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Estatísticas</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Formulários Criados</span>
+                    <span class="text-xl font-bold text-gray-900 dark:text-white">{{ forms.length }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Total de Submissões</span>
+                    <span class="text-xl font-bold text-gray-900 dark:text-white">{{ submissions.length }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Último Acesso</span>
+                    <span class="text-gray-900 dark:text-white">{{ tenant.last_login | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plano e Limites -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Plano e Limites</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Plano Atual</label>
+                    <p class="text-gray-900 dark:text-white font-medium">{{ tenant.plan?.name || 'Free' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Limite de
+                        Formulários</label>
+                    <p class="text-gray-900 dark:text-white">{{ tenant.plan?.max_forms || 'Iimitado' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Limite de
+                        Submissões/mês</label>
+                    <p class="text-gray-900 dark:text-white">{{ tenant.plan?.max_submissions || 'Ilimitado' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    @if (activeTab === 'forms') {
+    <div
+        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            Título</th>
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            Slug</th>
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            Criação</th>
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    @if (forms.length === 0) {
+                    <tr>
+                        <td colspan="4" class="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                            Nenhum formulário encontrado
+                        </td>
+                    </tr>
+                    } @else {
+                    @for (form of forms; track form.id) {
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ form.title }}</td>
+                        <td class="px-4 py-3">
+                            <code
+                                class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-gray-700 dark:text-gray-300">{{ form.slug }}</code>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ form.created_at |
+                            date:'dd/MM/yyyy' }}</td>
+                        <td class="px-4 py-3">
+                            @if (form.active) {
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Ativo</span>
+                            } @else {
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400">Inativo</span>
+                            }
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+
+    @if (activeTab === 'submissions') {
+    <div
+        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            Formulário</th>
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            Data</th>
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                            IP</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    @if (submissions.length === 0) {
+                    <tr>
+                        <td colspan="3" class="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                            Nenhuma submissão encontrada
+                        </td>
+                    </tr>
+                    } @else {
+                    @for (submission of submissions; track submission.id) {
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ submission.form?.title ||
+                            'Formulário excluído' }}</td>
+                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ submission.created_at |
+                            date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ submission.ip_address || '-'
+                            }}</td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+    }
+</div>

@@ -10,17 +10,11 @@ import { RouterModule } from '@angular/router';
     styleUrls: ['./super-admin-layout.component.scss']
 })
 export class SuperAdminLayoutComponent {
-    menuItems = [
-        { icon: 'dashboard', label: 'Dashboard', path: '/super-admin/dashboard' },
-        { icon: 'users', label: 'Tenants', path: '/super-admin/tenants' },
-        { icon: 'credit_card', label: 'Planos', path: '/super-admin/plans' },
-        { icon: 'list_alt', label: 'Logs', path: '/super-admin/logs' },
-        { icon: 'settings', label: 'Configurações', path: '/super-admin/settings' }
+    navigation = [
+        { label: 'Dashboard', path: '/super-admin/dashboard' },
+        { label: 'Tenants', path: '/super-admin/tenants' },
+        { label: 'Planos', path: '/super-admin/plans' },
+        { label: 'Logs', path: '/super-admin/logs' },
+        { label: 'Configurações', path: '/super-admin/settings' }
     ];
-
-    sidebarOpen = true;
-
-    toggleSidebar() {
-        this.sidebarOpen = !this.sidebarOpen;
-    }
 }

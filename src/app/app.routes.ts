@@ -39,6 +39,13 @@ export const routes: Routes = [
     canActivate: [publicGuard],
   },
   {
+    path: 'first-access',
+    loadComponent: () =>
+      import('./features/auth/first-access/first-access.component').then(
+        (m) => m.FirstAccessComponent
+      ),
+  },
+  {
     path: 'set-password',
     loadComponent: () =>
       import('./features/auth/set-password/set-password.component').then(

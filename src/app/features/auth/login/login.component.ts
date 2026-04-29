@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@core/services/auth.service';
+import { SupabaseService } from '@core/services/supabase.service';
 import { ToastService } from '@core/services/toast.service';
 
 @Component({
@@ -94,6 +95,7 @@ import { ToastService } from '@core/services/toast.service';
 })
 export class LoginComponent {
   private auth = inject(AuthService);
+  private supabase = inject(SupabaseService);
   private router = inject(Router);
   private toast = inject(ToastService);
 
@@ -114,7 +116,23 @@ export class LoginComponent {
 
     try {
       await this.auth.signIn(this.email, this.password);
-      await this.router.navigate(['/admin']);
+
+      // VERIFICA SE USUARIO PRECISA ALTERAR SENHA NO PRIMEIRO ACESSO
+      const { data: needsChange } = await this.supabase.client.rpc('needs_password_change');
+
+      if (needsChange) {
+        await this.router.navigate(['/first-access']);
+        return;
+      }
+
+      // VERIFICA SE É SUPER ADMIN E REDIRECIONA AUTOMATICAMENTE
+      const { data: isSuperAdmin } = await this.supabase.client.rpc('is_super_admin');
+
+      if (isSuperAdmin) {
+        await this.router.navigate(['/super-admin']);
+      } else {
+        await this.router.navigate(['/admin']);
+      }
     } catch (err: any) {
       this.error.set(err.message || 'Erro ao fazer login');
     } finally {
